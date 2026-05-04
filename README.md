@@ -20,7 +20,7 @@ bundle install
 ```
 psql -U postgres # Aqui eu entro como usuário postgres padrão
 
-CREATE DATABASE sona_development; # Esses nomes precisam bater com o que está no database.yml
++ CREATE DATABASE sona_development; # Esses nomes precisam bater com o que está no database.yml
 CREATE DATABASE sona_test;
 
 CREATE USER sona WITH PASSWORD 'minhasenha'; # Criando um usuário específico para o projeto
