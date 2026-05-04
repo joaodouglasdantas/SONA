@@ -9,13 +9,13 @@ default: &default
   username: postgres
   password:
   host: localhost
-  pool: 5
+  pool: 5 #? Número máximo de conexões simultâneas que o Rails pode abrir com o banco
 
 #development:
 # <<: *default
 #  database: storage/development.sqlite3
 
-development:
+development: #? Banco usado quando eu rodo o servidor local (rails server)
   <<: *default
   database: sona_development
 
@@ -45,7 +45,7 @@ test:
 #    migrations_paths: db/cable_migrate
 
 production:
-  <<: *default
+  <<: *default #? Significa “herde todas as configurações do bloco default”
   database: sona_production
   username: sona
   password: <senha>
