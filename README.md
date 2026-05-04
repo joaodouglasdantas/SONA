@@ -74,4 +74,15 @@
 +rails g model User name email
 +rails db:migrate
 # Meu model ja cria a migration seguindo o padrao -> User / Users / CreateUsers
+
+---
+
+- Testando
+
++rails console
++User.create(name: "João", email: "joao@example.com")
++User.all
+
+# O rails tem uma medida de segurança para evitar que dados sensíveis apareçam sem querer em logs ou saídas do console, rode pra ver os dados
++User.pluck(:name, :email)
 ```
