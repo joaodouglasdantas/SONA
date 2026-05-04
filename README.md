@@ -31,7 +31,8 @@ bundle install
 
 +CREATE USER sona WITH PASSWORD 'minhasenha';
 # Criando um usuário específico para o projeto
-+ALTER ROLE sona CREATEDB; # Dando permissões ao usuário
++ALTER ROLE sona CREATEDB;
+# Dando permissões ao usuário
 
 ---
 
@@ -39,6 +40,8 @@ bundle install
 # Esse comando dá ao usuário sona acesso total ao schema public, que é onde o Rails cria as tabelas por padrão
 +ALTER USER sona WITH SUPERUSER;
 # Um superuser é um usuário que tem todas as permissões dentro do PostgreSQL
+
+---
 
 - Conferir se funcionou
 
