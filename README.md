@@ -25,9 +25,9 @@ CREATE DATABASE sona_test;
 
 CREATE USER sona WITH PASSWORD 'minhasenha'; # Criando um usuário específico para o projeto
 ALTER ROLE sona CREATEDB; # Dando permissões ao usuário
-```
-**Conferir se funcionou**
-```
+
+# Conferir se funcionou
+
 \l   -- lista todos os bancos
 \du  -- lista todos os usuários
 \q   -- sair
