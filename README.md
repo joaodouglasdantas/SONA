@@ -1,16 +1,17 @@
 # Comecei o projeto
 
-```
-rails new SONA
+```diff
++rails new SONA
 ```
 
 ---
 
 ## Adicionando gem do PostgreSQL
 
-```
-gem 'pg' # Adicionando no Gemfile
-bundle install
+```diff
++gem 'pg'
+# Adicionando no Gemfile
++bundle install
 ```
 
 ---
