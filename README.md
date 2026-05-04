@@ -118,3 +118,17 @@
 
 - Adicionar validações e regras de negócio no model User (app/models/user.rb)
 ```
+
+---
+
+## Rodando o Projeto
+
+```diff
++rails server
+# Abrir em http://localhost:3000
+
++rails routes
+# Confira as rotas do projeto
++rails routes | findstr users
+# Rotas pra user
+```
