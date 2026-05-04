@@ -96,6 +96,8 @@
 +rails db:migrate
 +rails server
 
+---
+
 - Vamos fazer da forma manual
 
 +rails g controller Users
