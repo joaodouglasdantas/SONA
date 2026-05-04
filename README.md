@@ -2,6 +2,7 @@
 
 ```diff
 +rails new SONA
+# Poderia ter usado rails new SONA --database=postgresql mas queria fazer manualmente
 ```
 
 ---
