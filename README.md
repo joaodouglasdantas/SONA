@@ -46,11 +46,17 @@ bundle install
 - Conferir se funcionou
 
 +\l
-# lista todos os bancos
+# Lista todos os bancos
 +\du
-#lista todos os usuários
+# Lista todos os usuários
++\dn+
+# Lista os schemas e mostra quem tem privilégios
 +\q
-#sair
+# Sair
++psql -U sona -d sona_development
+# Acessar bd com user sona
++\dt
+# Isso lista as tabelas ( deve aparecer schema_migrations e ar_internal_metadata )
 
 ---
 
