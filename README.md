@@ -8,4 +8,5 @@ rails new SONA
 
 ```
 gem 'pg' # Adicionando no Gemfile
+bundle install
 ```
