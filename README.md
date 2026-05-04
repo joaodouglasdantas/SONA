@@ -1,4 +1,4 @@
-# Comecei o projeto
+# Comecei o Projeto
 
 ```diff
 +rails new SONA
@@ -67,3 +67,11 @@
 ```
 
 ---
+
+## Criando User
+
+```diff
++rails g model User name email
++rails db:migrate
+# Meu model ja cria a migration seguindo o padrao -> User / Users / CreateUsers
+```
