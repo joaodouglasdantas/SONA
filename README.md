@@ -73,7 +73,7 @@
 ```diff
 +rails g model User name email
 +rails db:migrate
-# Meu model ja cria a migration seguindo o padrao -> User / Users / CreateUsers
+# Meu model ja cria a migration seguindo o padrao → User / Users / CreateUsers
 
 ---
 
@@ -108,13 +108,13 @@
 
 - Implementar as ações no UsersController
 
-# index → lista todos os usuários.
-# show → mostra um usuário específico.
-# new → exibe o formulário para criar.
-# create → salva o novo usuário no banco.
-# edit → exibe o formulário para editar.
-# update → aplica as alterações.
-# destroy → apaga o usuário.
+# index → lista todos os usuários
+# show → mostra um usuário específico
+# new → exibe o formulário para criar
+# create → salva o novo usuário no banco
+# edit → exibe o formulário para editar
+# update → aplica as alterações
+# destroy → apaga o usuário
 
 - Adicionar validações e regras de negócio no model User (app/models/user.rb)
 ```
