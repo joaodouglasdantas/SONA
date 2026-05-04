@@ -86,3 +86,25 @@
 # O rails tem uma medida de segurança para evitar que dados sensíveis apareçam sem querer em logs ou saídas do console, rode pra ver os dados
 +User.pluck(:name, :email)
 ```
+
+---
+
+## Gerando CRUD
+
+```diff
++rails g scaffold User name email
++rails db:migrate
++rails server
+
+- Vamos fazer da forma manual
+
++rails g controller Users
++resources :users
+# Definir rota com CRUD completo em config/routes.rb
+
+- Criar as views index, show, new e edit em app/views/users/
+
+- Implementar as ações no UsersController
+
+- Adicionar validações e regras de negócio no model User (app/models/user.rb)
+```
