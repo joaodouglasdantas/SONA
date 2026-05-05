@@ -181,6 +181,16 @@
 
 - Adicionando rotas com authenticated :user do no lugar do devise_scope
 
-+ before_action :authenticate_user!
++before_action :authenticate_user!
 # Adicionando callback de proteção de rota com autenticação no controller
+
+---
+
++match "*path", to: "errors#routing", via: :all
+# Adicionando rota pra rotas nao existentes, assim consigo exibir o erro de forma controlada
+
++rails g controller Errors routing
+# Adicionando controller de erro de rotas
+
+- Adicionando logica if/else no controller pra redirecionar o user
 ```
