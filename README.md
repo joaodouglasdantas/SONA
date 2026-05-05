@@ -171,3 +171,13 @@
 +end
 # Definindo minha home no arquivo config/routes.rb
 ```
+
+---
+
+## Crindo Dash pro User Logado
+
+```diff
++rails g controller Dashboard index
+
+- Adicionando rotas com authenticated :user do no lugar do devise_scope
+```
