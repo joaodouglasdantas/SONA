@@ -138,9 +138,26 @@
 ## Configurando Tela de Login
 
 ```diff
+- Iremos deletar o user criado pra implementarmos o devise
+
 +gem 'devise'
 +bundle install
 # Instalando minha gem pra login
 
++rails g devise:install
+# Instalando devise no projeto
 
+- Deletando o arquivo app/models/user.rb
+
+- Deletando as migrations que criaram a tabela users
+
+- Dropando a tabela com rails db:drop db:create
+
+- Deletando o arquivo app/controllers/users_controller.rb
+
+---
+
++rails generate devise User
+# Gerando user com devise
++rails db:migrate
 ```
