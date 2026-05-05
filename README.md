@@ -132,3 +132,15 @@
 +rails routes | findstr users
 # Rotas pra user
 ```
+
+---
+
+## Configurando Tela de Login
+
+```diff
++gem 'devise'
++bundle install
+# Instalando minha gem pra login
+
+
+```
