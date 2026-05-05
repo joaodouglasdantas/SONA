@@ -165,4 +165,11 @@
 - Como estamos recomeçando o sistema podemos apagar o schema do bd pra não dar BO
 
 +rails db:migrate
+
+```
+devise_scope :user do
+  root to: "devise/sessions#new"
+end
+```
+# Definindo minha home no arquivo config/routes.rb
 ```
