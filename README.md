@@ -174,7 +174,7 @@
 
 ---
 
-## Crindo Dash pro User Logado
+## Criando Dash pro User Logado
 
 ```diff
 +rails g controller Dashboard index
