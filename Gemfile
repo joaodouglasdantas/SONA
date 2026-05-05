@@ -8,7 +8,11 @@ gem "importmap-rails"
 gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
+
+# PostgreSQL
 gem "pg"
+# Login
+gem "devise"
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
