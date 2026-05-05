@@ -157,7 +157,12 @@
 
 ---
 
-+rails generate devise User
++rails g devise User
 # Gerando user com devise
++rails g devise:views
+# Gerando views do devise pra edição
+
+- Como estamos recomeçando o sistema podemos apagar o schema do bd pra não dar BO
+
 +rails db:migrate
 ```
