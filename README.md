@@ -166,10 +166,8 @@
 
 +rails db:migrate
 
-```
-devise_scope :user do
-  root to: "devise/sessions#new"
-end
-```
++devise_scope :user do
++  root to: "devise/sessions#new"
++end
 # Definindo minha home no arquivo config/routes.rb
 ```
