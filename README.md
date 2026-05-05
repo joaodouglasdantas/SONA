@@ -180,4 +180,7 @@
 +rails g controller Dashboard index
 
 - Adicionando rotas com authenticated :user do no lugar do devise_scope
+
++ before_action :authenticate_user!
+# Adicionando callback de proteção de rota com autenticação no controller
 ```
