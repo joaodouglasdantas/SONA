@@ -216,4 +216,13 @@
 ---
 
 - Configurando o .gitattributes pra conversao dos arquivos windows/linux sem problema
+
++bundle exec rails app:update:bin
++#!/usr/bin/env ruby
+# Alterando as definições ruby.exe do windows
+
++docker compose up --build
+# Construindo o docker
++docker compose run web bin/rails db:create db:migrate
+# Criando banco
 ```
