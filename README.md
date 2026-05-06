@@ -206,4 +206,5 @@
 
 - Ajustando o db pra usar automaticamente as credenciais do .env
 
+- Configurando bd pra rodar dentro e fora do docker
 ```
