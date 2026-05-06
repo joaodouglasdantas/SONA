@@ -6,9 +6,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: postgres
-  password: postgres
-  host: db
+  username: <%= ENV.fetch("POSTGRES_USER", "postgres") %>
+  password: <%= ENV.fetch("POSTGRES_PASSWORD", "postgres") %>
+  host: <%= ENV.fetch("POSTGRES_HOST", "db") %>
   pool: 5 #? Número máximo de conexões simultâneas que o Rails pode abrir com o banco
 
 #development:
@@ -47,5 +47,3 @@ test:
 production:
   <<: *default #? Significa “herde todas as configurações do bloco default”
   database: sona_production
-  username: postgres
-  password: postgres

@@ -204,4 +204,6 @@
 
 - Alterando o usuario sona criado pelo padrao do pg
 
+- Ajustando o db pra usar automaticamente as credenciais do .env
+
 ```
