@@ -13,6 +13,8 @@ gem "jbuilder"
 gem "pg"
 # Login
 gem "devise"
+# Configurar .env
+gem "dotenv-rails"
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

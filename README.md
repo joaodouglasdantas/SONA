@@ -207,4 +207,13 @@
 - Ajustando o db pra usar automaticamente as credenciais do .env
 
 - Configurando bd pra rodar dentro e fora do docker
+
+- Criando .env
+
++dotenv-rails
+# Instalando a gem para rodar rails s fora do Docker
+
+---
+
+- Configurando o .gitattributes pra conversao dos arquivos windows/linux sem problema
 ```
