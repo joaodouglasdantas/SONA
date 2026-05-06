@@ -221,6 +221,9 @@
 +#!/usr/bin/env ruby
 # Alterando as definições ruby.exe do windows
 
++docker compose run web bundle install
+# Rodando as gems no docker
+
 +docker compose up --build
 # Construindo o docker
 +docker compose run web bin/rails db:create db:migrate
