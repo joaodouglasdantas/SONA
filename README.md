@@ -194,3 +194,9 @@
 
 - Adicionando logica if/else no controller pra redirecionar o user
 ```
+
+## Configurando Docker
+
+```diff
+- Criando meu Dockerfile
+```
