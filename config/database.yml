@@ -6,9 +6,9 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  username: sona
-  password: minhasenha
-  host: localhost
+  username: postgres
+  password: postgres
+  host: db
   pool: 5 #? Número máximo de conexões simultâneas que o Rails pode abrir com o banco
 
 #development:
@@ -47,5 +47,5 @@ test:
 production:
   <<: *default #? Significa “herde todas as configurações do bloco default”
   database: sona_production
-  username: sona
-  password: <senha>
+  username: postgres
+  password: postgres
