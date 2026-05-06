@@ -198,5 +198,10 @@
 ## Configurando Docker
 
 ```diff
-- Criando meu Dockerfile
+- Editando meu Dockerfile
+
+- Criando meu compose do Docker
+
+- Alterando o usuario sona criado pelo padrao do pg
+
 ```
