@@ -228,4 +228,11 @@
 # Construindo o docker
 +docker compose run web bin/rails db:create db:migrate
 # Criando banco
+
+- Isso garante que roda toda vez que o container sobe:
+
++bundle install
+# Adicionando bundle no compose pra sempre subir as gems atualizadas
++bin/rails db:create db:migrate
+# Adicionando comando do db no compose pra rodar automatico
 ```
