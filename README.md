@@ -280,3 +280,26 @@
 ```bash
 ./referencias
 ```
+
+---
+
+## Alterando o sistema pra exibir horario
+
+```diff
++rails g migration ChangeRecordedAtToDatetimeInEmotions
+
+- Adicionando o datetime no lugar do recorded_at
+
++rails db:migrate
+
++app/models/emotion.rb
+# Adicionando callback
++app/controllers/emotions_controller.rb
+# Removendo recorded_at
++app/views/emotions/new.html.erb
+# Remover o campo de data do formulário
++app/views/emotions/index.html.erb
+# Toquei o header e a linha de data
++app/views/emotions/show.html.erb
+# Troquei o título
+```

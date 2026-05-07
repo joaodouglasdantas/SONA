@@ -25,6 +25,6 @@ class EmotionsController < ApplicationController
   private
 
   def emotion_params
-    params.require(:emotion).permit(:mood, :intensity, :note, :recorded_at)
+    params.require(:emotion).permit(:mood, :intensity, :note)
   end
 end
