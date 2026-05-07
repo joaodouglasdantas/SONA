@@ -286,4 +286,7 @@
 - Removi o callback e a validação (app/models/emotion.rb)
 - Troquei meu recorded_at por created_at (app/views/emotions/index.html.erb) + (app/views/emotions/show.html.erb)
 - Ordenar agora por created_at (app/controllers/emotions_controller.rb)
+
++config.time_zone = 'America/Sao_Paulo'
+# Configurando fuso no config/application.rb
 ```
