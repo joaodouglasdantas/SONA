@@ -257,3 +257,12 @@
 
 - Adicionando codigo ao controller emotions
 ```
+
+## Adicionando as views do projeto
+
+```diff
++app/views/emotions/index.html.erb
++app/views/emotions/new.html.erb
++app/views/emotions/show.html.erb
++app/views/dashboard/index.html.erb
+```

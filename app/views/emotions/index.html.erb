@@ -1,2 +1,30 @@
-<h1>Emotions#index</h1>
-<p>Find me in app/views/emotions/index.html.erb</p>
+<h1>Minhas Emoções</h1>
+
+<%= link_to "Registrar nova emoção", new_emotion_path %>
+
+<% if @emotions.empty? %>
+  <p>Nenhuma emoção registrada ainda.</p>
+<% else %>
+  <table>
+    <thead>
+      <tr>
+        <th>Data</th>
+        <th>Emoção</th>
+        <th>Intensidade</th>
+        <th>Anotação</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @emotions.each do |emotion| %>
+        <tr>
+          <td><%= emotion.recorded_at.strftime("%d/%m/%Y") %></td>
+          <td><%= emotion.mood %></td>
+          <td><%= emotion.intensity %>/10</td>
+          <td><%= emotion.note %></td>
+          <td><%= link_to "Ver", emotion_path(emotion) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>

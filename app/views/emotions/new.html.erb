@@ -1,2 +1,35 @@
-<h1>Emotions#new</h1>
-<p>Find me in app/views/emotions/new.html.erb</p>
+<h1>Registrar Emoção</h1>
+
+<%= form_with model: @emotion do |f| %>
+  <% if @emotion.errors.any? %>
+    <div>
+      <% @emotion.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :mood, "Como você está se sentindo?" %>
+    <%= f.select :mood, ["Feliz", "Triste", "Ansioso", "Irritado", "Calmo", "Estressado", "Entorpecido", "Esperançoso"] %>
+  </div>
+
+  <div>
+    <%= f.label :intensity, "Intensidade (1 a 10)" %>
+    <%= f.number_field :intensity, min: 1, max: 10 %>
+  </div>
+
+  <div>
+    <%= f.label :note, "Anotação (opcional)" %>
+    <%= f.text_area :note %>
+  </div>
+
+  <div>
+    <%= f.label :recorded_at, "Data" %>
+    <%= f.date_field :recorded_at, value: Date.today %>
+  </div>
+
+  <%= f.submit "Registrar" %>
+<% end %>
+
+<%= link_to "Voltar", emotions_path %>

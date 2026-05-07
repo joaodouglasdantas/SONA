@@ -1,2 +1,7 @@
-<h1>Emotions#show</h1>
-<p>Find me in app/views/emotions/show.html.erb</p>
+<h1>Emoção — <%= @emotion.recorded_at.strftime("%d/%m/%Y") %></h1>
+
+<p><strong>Emoção:</strong> <%= @emotion.mood %></p>
+<p><strong>Intensidade:</strong> <%= @emotion.intensity %>/10</p>
+<p><strong>Anotação:</strong> <%= @emotion.note.presence || "Nenhuma anotação." %></p>
+
+<%= link_to "Voltar", emotions_path %>
