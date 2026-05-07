@@ -239,6 +239,8 @@
 # Adicionando comando do db no compose pra rodar automatico
 ```
 
+---
+
 ## Gerando MVC de emoção
 
 ```diff
@@ -257,6 +259,8 @@
 
 - Adicionando codigo ao controller emotions
 ```
+
+---
 
 ## Adicionando as views do projeto
 
