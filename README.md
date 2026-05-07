@@ -244,4 +244,9 @@
 ```diff
 +rails g model Emotion user:references mood intensity:integer note:text recorded_at:date
 +rails db:migrate
+
++has_many :emotions, dependent: :destroy
+# Adicionando a relação em user
+
+- Criando validações em emotion
 ```
