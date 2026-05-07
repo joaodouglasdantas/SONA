@@ -254,4 +254,6 @@
 
 +resources :emotions, only: [:index, :new, :create, :show]
 # Rotas de emotions abertas
+
+- Adicionando codigo ao controller emotions
 ```

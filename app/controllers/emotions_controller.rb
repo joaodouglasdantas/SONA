@@ -1,13 +1,30 @@
 class EmotionsController < ApplicationController
+  before_action :authenticate_user!
+
   def index
+    @emotions = current_user.emotions.order(recorded_at: :desc)
   end
 
   def new
+    @emotion = Emotion.new
   end
 
   def create
+    @emotion = current_user.emotions.build(emotion_params)
+    if @emotion.save
+      redirect_to emotions_path, notice: "Emoção registrada com sucesso!"
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def show
+    @emotion = current_user.emotions.find(params[:id])
+  end
+
+  private
+
+  def emotion_params
+    params.require(:emotion).permit(:mood, :intensity, :note, :recorded_at)
   end
 end
