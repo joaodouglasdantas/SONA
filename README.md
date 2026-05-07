@@ -238,3 +238,9 @@
 +bin/rails db:create db:migrate
 # Adicionando comando do db no compose pra rodar automatico
 ```
+
+## Ajustando Rotas do Devise
+
+´´´diff
+
+´´´
