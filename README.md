@@ -289,4 +289,13 @@
 
 +config.time_zone = 'America/Sao_Paulo'
 # Configurando fuso no config/application.rb
+
+No config/application eu defino comportamentos globais que valem para todos os ambientes (desenvolvimento, teste e produção).
+Meu Rails tem três arquivos principais de configuração de ambiente:
+
+config/environments/development.rb → só para desenvolvimento
+config/environments/test.rb → só para testes
+config/environments/production.rb → só para produção
+
+Tudo que eu colocar no application.rb vale para os três ao mesmo tempo, seria o lugar certo para configurações que não mudam dependendo do ambiente.
 ```
