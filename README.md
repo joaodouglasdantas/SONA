@@ -270,3 +270,5 @@
 +app/views/emotions/show.html.erb
 +app/views/dashboard/index.html.erb
 ```
+
+## Adicionando referencias
