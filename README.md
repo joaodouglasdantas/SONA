@@ -239,7 +239,7 @@
 # Adicionando comando do db no compose pra rodar automatico
 ```
 
-## Gerando model de emoção
+## Gerando MVC de emoção
 
 ```diff
 +rails g model Emotion user:references mood intensity:integer note:text recorded_at:date
@@ -249,4 +249,9 @@
 # Adicionando a relação em user
 
 - Criando validações em emotion
+
++rails g controller Emotions index new create show
+
++resources :emotions, only: [:index, :new, :create, :show]
+# Rotas de emotions abertas
 ```

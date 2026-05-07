@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "emotions/index"
+  get "emotions/new"
+  get "emotions/create"
+  get "emotions/show"
   devise_for :users
 
   get "dashboard", to: "dashboard#index"
@@ -9,6 +13,7 @@ Rails.application.routes.draw do
 
   authenticated :user do
     root to: "dashboard#index", as: :authenticated_root
+    resources :emotions, only: [ :index, :new, :create, :show ]
   end
 
   unauthenticated do
