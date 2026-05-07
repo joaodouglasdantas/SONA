@@ -271,6 +271,8 @@
 +app/views/dashboard/index.html.erb
 ```
 
+---
+
 ## Adicionando referencias
 
 ```bash
