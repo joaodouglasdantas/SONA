@@ -18,7 +18,7 @@
     <tbody>
       <% @emotions.each do |emotion| %>
         <tr>
-          <td><%= emotion.recorded_at.strftime("%d/%m/%Y às %H:%M") %></td>
+          <td><%= emotion.created_at.strftime("%d/%m/%Y às %H:%M") %></td>
           <td><%= emotion.mood %></td>
           <td><%= emotion.intensity %>/10</td>
           <td><%= emotion.note %></td>

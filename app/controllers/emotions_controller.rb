@@ -2,7 +2,7 @@ class EmotionsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @emotions = current_user.emotions.order(recorded_at: :desc)
+    @emotions = current_user.emotions.order(created_at: :desc)
   end
 
   def new

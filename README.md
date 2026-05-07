@@ -279,3 +279,11 @@
 +app/views/emotions/show.html.erb
 # Troquei o título
 ```
+
+## Corrigindo Erros
+
+```diff
+- Removi o callback e a validação (app/models/emotion.rb)
+- Troquei meu recorded_at por created_at (app/views/emotions/index.html.erb) + (app/views/emotions/show.html.erb)
+- Ordenar agora por created_at (app/controllers/emotions_controller.rb)
+```
