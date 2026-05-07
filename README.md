@@ -272,3 +272,7 @@
 ```
 
 ## Adicionando referencias
+
+```bash
+./referencias
+```
