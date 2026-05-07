@@ -238,3 +238,10 @@
 +bin/rails db:create db:migrate
 # Adicionando comando do db no compose pra rodar automatico
 ```
+
+## Gerando model de emoção
+
+```diff
++rails g model Emotion user:references mood intensity:integer note:text recorded_at:date
++rails db:migrate
+```
