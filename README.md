@@ -5,8 +5,6 @@
 # Poderia ter usado rails new SONA --database=postgresql mas queria fazer manualmente
 ```
 
----
-
 ## Adicionando gem do PostgreSQL
 
 ```diff
@@ -14,8 +12,6 @@
 # Adicionando no Gemfile
 +bundle install
 ```
-
----
 
 ## Criando BD
 
@@ -66,8 +62,6 @@
 +rails db:migrate
 ```
 
----
-
 ## Criando User
 
 ```diff
@@ -86,8 +80,6 @@
 # O rails tem uma medida de segurança para evitar que dados sensíveis apareçam sem querer em logs ou saídas do console, rode pra ver os dados
 +User.pluck(:name, :email)
 ```
-
----
 
 ## Gerando CRUD
 
@@ -119,8 +111,6 @@
 - Adicionar validações e regras de negócio no model User (app/models/user.rb)
 ```
 
----
-
 ## Rodando o Projeto
 
 ```diff
@@ -132,8 +122,6 @@
 +rails routes | findstr users
 # Rotas pra user
 ```
-
----
 
 ## Configurando Tela de Login
 
@@ -172,8 +160,6 @@
 # Definindo minha home no arquivo config/routes.rb
 ```
 
----
-
 ## Criando Dash pro User Logado
 
 ```diff
@@ -194,8 +180,6 @@
 
 - Adicionando logica if/else no controller pra redirecionar o user
 ```
-
----
 
 ## Configurando Docker
 
@@ -241,8 +225,6 @@
 # Adicionando comando do db no compose pra rodar automatico
 ```
 
----
-
 ## Gerando MVC de emoção
 
 ```diff
@@ -262,8 +244,6 @@
 - Adicionando codigo ao controller emotions
 ```
 
----
-
 ## Adicionando as views do projeto
 
 ```diff
@@ -273,15 +253,11 @@
 +app/views/dashboard/index.html.erb
 ```
 
----
-
 ## Adicionando referencias
 
 ```bash
 ./referencias
 ```
-
----
 
 ## Alterando o sistema pra exibir horario
 
