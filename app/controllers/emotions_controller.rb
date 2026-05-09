@@ -22,6 +22,25 @@ class EmotionsController < ApplicationController
     @emotion = current_user.emotions.find(params[:id])
   end
 
+  def edit
+    @emotion = current_user.emotions.find(params[:id])
+  end
+
+  def update
+    @emotion = current_user.emotions.find(params[:id])
+    if @emotion.update(emotion_params)
+      redirect_to emotion_path, notice: "Emoção atualizada com sucesso!"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @emotion = current_user.emotions.find(params[:id])
+    @emotion.destroy
+    redirect_to emotions_path, notice: "Emoção excluída com sucesso!"
+  end
+
   private
 
   def emotion_params
