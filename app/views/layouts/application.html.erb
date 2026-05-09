@@ -24,6 +24,15 @@
   </head>
 
   <body>
+    <% if user_signed_in? %>
+      <nav>
+        <span>Olá, <%= current_user.first_name %></span>
+        <%= link_to "Dashboard", dashboard_path %>
+        <%= link_to "Minhas Emoções", emotions_path %>
+        <%= button_to "Sair", destroy_user_session_path, method: :delete %>
+      </nav>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>

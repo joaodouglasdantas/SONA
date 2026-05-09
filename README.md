@@ -329,4 +329,7 @@ Tudo que eu colocar no application.rb vale para os três ao mesmo tempo, seria o
 
 +validates :first_name, presence: true
 +validates :last_name, presence: true
+
++<%= button_to "Sair", destroy_user_session_path, method: :delete %>
+# Adicionando metodo de sair do app pro login
 ```
