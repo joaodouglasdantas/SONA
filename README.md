@@ -322,4 +322,6 @@ Tudo que eu colocar no application.rb vale para os três ao mesmo tempo, seria o
 +rails db:migrate
 
 +docker compose run web bin/rails db:migrate
+
+- Adicionando callback para o Devise aceitar os novos campos no application_controller
 ```
