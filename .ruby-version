@@ -1,1 +1,3 @@
 ruby-3.4.9
+
+# Sempre que eu entrar na pasta do projeto, o RVM ativa essa versão automaticamente, sem precisar mexer no padrão global
