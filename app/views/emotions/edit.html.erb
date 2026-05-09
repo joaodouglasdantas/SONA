@@ -1,0 +1,30 @@
+<h1>Editar Emoção</h1>
+
+<%= form_with model: @emotion do |f| %>
+  <% if @emotion.errors.any? %>
+    <div>
+      <% @emotion.errors.full_messages.each do |msg| %>
+        <p><%= msg %></p>
+      <% end %>
+    </div>
+  <% end %>
+
+  <div>
+    <%= f.label :mood, "Como você está se sentindo?" %>
+    <%= f.select :mood, ["Feliz", "Triste", "Ansioso", "Irritado", "Calmo", "Estressado", "Entorpecido", "Esperançoso"] %>
+  </div>
+
+  <div>
+    <%= f.label :intensity, "Intensidade (1 a 10)" %>
+    <%= f.number_field :intensity, min: 1, max: 10 %>
+  </div>
+
+  <div>
+    <%= f.label :note, "Anotação (opcional)" %>
+    <%= f.text_area :note %>
+  </div>
+
+  <%= f.submit "Salvar alterações" %>
+<% end %>
+
+<%= link_to "Cancelar", emotions_path %>

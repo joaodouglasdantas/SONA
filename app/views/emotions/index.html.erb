@@ -22,7 +22,11 @@
           <td><%= emotion.mood %></td>
           <td><%= emotion.intensity %>/10</td>
           <td><%= emotion.note %></td>
-          <td><%= link_to "Ver", emotion_path(emotion) %></td>
+          <td>
+            <%= link_to "Ver", emotion_path(emotion) %>
+            <%= link_to "Editar", edit_emotion_path(emotion) %>
+            <%= button_to "Deletar", emotion_path(emotion), method: :delete, data: { turbo_confirm: "Tem certeza?" } %>
+          </td>
         </tr>
       <% end %>
     </tbody>

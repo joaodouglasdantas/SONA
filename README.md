@@ -306,3 +306,20 @@ Tudo que eu colocar no application.rb vale para os três ao mesmo tempo, seria o
 +resources :emotions
 # Substituindo as rotas padrao criadas por resources e retirando da funcao de autenticado
 ```
+
+## Construindo emotions
+
+```diff
+- Adicionando codigo de edit/delet ao controller de emotions
+
+- Adicionando views
+```
+
+## Construindo Perfil pra User
+
+```diff
++rails g migration AddNameToUsers first_name last_name
++rails db:migrate
+
++docker compose run web bin/rails db:migrate
+```

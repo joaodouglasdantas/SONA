@@ -29,7 +29,7 @@ class EmotionsController < ApplicationController
   def update
     @emotion = current_user.emotions.find(params[:id])
     if @emotion.update(emotion_params)
-      redirect_to emotion_path, notice: "Emoção atualizada com sucesso!"
+      redirect_to emotions_path, notice: "Emoção atualizada com sucesso!"
     else
       render :edit, status: :unprocessable_entity
     end
