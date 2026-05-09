@@ -299,3 +299,10 @@ config/environments/production.rb → só para produção
 
 Tudo que eu colocar no application.rb vale para os três ao mesmo tempo, seria o lugar certo para configurações que não mudam dependendo do ambiente.
 ```
+
+## Corrigindo mais erros
+
+```diff
++resources :emotions
+# Substituindo as rotas padrao criadas por resources e retirando da funcao de autenticado
+```
