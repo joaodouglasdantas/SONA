@@ -326,4 +326,7 @@ Tudo que eu colocar no application.rb vale para os três ao mesmo tempo, seria o
 - Adicionando callback para o Devise aceitar os novos campos no application_controller
 
 - Adicionando os novos campos ao new do devise nas views
+
++validates :first_name, presence: true
++validates :last_name, presence: true
 ```
