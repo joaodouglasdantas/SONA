@@ -332,4 +332,8 @@ Tudo que eu colocar no application.rb vale para os três ao mesmo tempo, seria o
 
 +<%= button_to "Sair", destroy_user_session_path, method: :delete %>
 # Adicionando metodo de sair do app pro login
+
++docker compose run web bin/rails console
++User.destroy_all
+# Retirando os users antigos sem nome no login
 ```
