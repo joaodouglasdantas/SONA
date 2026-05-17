@@ -1,30 +1,117 @@
-<h1>Registrar Emoção</h1>
+<%# app/views/emotions/new.html.erb %>
+<% content_for :title, "Registrar Emoção — SONA" %>
 
-<%= form_with model: @emotion do |f| %>
-  <% if @emotion.errors.any? %>
-    <div>
-      <% @emotion.errors.full_messages.each do |msg| %>
-        <p><%= msg %></p>
+<div class="emotion-register-page" id="registerPage">
+  <h1 class="emotion-register-title">Como você está?</h1>
+  <p class="emotion-register-sub">Escolha a emoção que mais representa seu momento</p>
+
+  <%= form_with model: @emotion, url: emotions_path, local: true, id: "emotionForm" do |f| %>
+    <% if @emotion.errors.any? %>
+      <div style="background:rgba(255,45,45,0.12); border:1px solid #ff2d2d; border-radius:12px; padding:1rem; margin-bottom:1.5rem; max-width:560px; width:100%;">
+        <% @emotion.errors.full_messages.each do |msg| %>
+          <p style="font-size:0.85rem; color:#ff6060;">⚠ <%= msg %></p>
+        <% end %>
+      </div>
+    <% end %>
+
+    <%= f.hidden_field :mood, id: "selectedMood" %>
+
+    <% emotions_list = [
+         ["feliz","Feliz"],["euforico","Eufórico"],["apaixonado","Apaixonado"],
+         ["romantico","Romântico"],["confiante","Confiante"],["sortudo","Sortudo"],
+         ["confortavel","Confortável"],["entediado","Entediado"],["cansado","Cansado"],
+         ["envergonhado","Envergonhado"],["triste","Triste"],["deprimido","Deprimido"],
+         ["assustado","Assustado"],["azarado","Azarado"],["doente","Doente"],
+         ["sujo","Sujo"],["estressado","Estressado"],["irritado","Irritado"],["bravo","Bravo"]
+       ] %>
+
+    <div class="emotion-grid">
+      <% emotions_list.each do |key, label| %>
+        <div class="emotion-card" data-mood="<%= key %>" onclick="selectEmotion('<%= key %>')" role="button" tabindex="0">
+          <div class="emotion-card-check">✓</div>
+          <img src="/assets/emocoes/<%= key %>-Photoroom.png"
+               onerror="this.src='/assets/emocoes/<%= key %>.png'"
+               class="emotion-card-img"
+               alt="<%= label %>">
+          <span class="emotion-card-label"><%= label %></span>
+        </div>
       <% end %>
     </div>
+
+    <div class="emotion-intensity-section">
+      <span class="emotion-intensity-label">Intensidade do sentimento</span>
+      <span class="emotion-intensity-value" id="intensityDisplay">5</span>
+      <%= f.range_field :intensity, min: 1, max: 10, value: 5,
+                        class: "emotion-slider", id: "intensitySlider",
+                        oninput: "updateIntensity(this.value)" %>
+      <p style="font-size:0.75rem; color:var(--sims-text-muted); margin-top:0.5rem;">
+        1 = quase imperceptível &nbsp;·&nbsp; 10 = avassalador
+      </p>
+    </div>
+
+    <div class="emotion-note-section">
+      <label for="emotion_note">O que pode ter causado isso? (opcional)</label>
+      <%= f.text_area :note, class: "emotion-textarea",
+                      placeholder: "Descreva o que aconteceu, o que você estava pensando...", rows: 4 %>
+    </div>
+
+    <button type="submit" class="emotion-submit-btn">💾 Registrar emoção</button>
   <% end %>
 
-  <div>
-    <%= f.label :mood, "Como você está se sentindo?" %>
-    <%= f.select :mood, ["Feliz", "Triste", "Ansioso", "Irritado", "Calmo", "Estressado", "Entorpecido", "Esperançoso"] %>
-  </div>
+  <br>
+  <%= link_to "← Minhas emoções", emotions_path,
+              style: "font-size:0.85rem; color:var(--sims-text-muted); margin-top:1.5rem;" %>
+</div>
 
-  <div>
-    <%= f.label :intensity, "Intensidade (1 a 10)" %>
-    <%= f.number_field :intensity, min: 1, max: 10 %>
-  </div>
+<script>
+const moodColors = {
+  feliz:        { primary: '#FFE135', secondary: '#FFA500', bg: '#1a1600' },
+  euforico:     { primary: '#7fe840', secondary: '#4dd9ff', bg: '#091a00' },
+  apaixonado:   { primary: '#ff6ebf', secondary: '#ff2d78', bg: '#1a0010' },
+  romantico:    { primary: '#ff8fab', secondary: '#ffb3c6', bg: '#1a0816' },
+  confiante:    { primary: '#ff8c00', secondary: '#ffb347', bg: '#1a0900' },
+  sortudo:      { primary: '#00e8a8', secondary: '#7fe840', bg: '#001a10' },
+  confortavel:  { primary: '#a8edea', secondary: '#74b9ff', bg: '#051518' },
+  triste:       { primary: '#5b8db8', secondary: '#3a5f80', bg: '#020810' },
+  deprimido:    { primary: '#3a3a5c', secondary: '#2a2a44', bg: '#05050f' },
+  entediado:    { primary: '#888888', secondary: '#aaaaaa', bg: '#0a0a0a' },
+  estressado:   { primary: '#ff4444', secondary: '#ff8800', bg: '#1a0200' },
+  irritado:     { primary: '#ff2d2d', secondary: '#c0392b', bg: '#1a0000' },
+  bravo:        { primary: '#8b0000', secondary: '#ff2d2d', bg: '#0f0000' },
+  assustado:    { primary: '#9b59b6', secondary: '#6c3483', bg: '#0d0014' },
+  cansado:      { primary: '#6b8c42', secondary: '#8bc34a', bg: '#070d02' },
+  envergonhado: { primary: '#e07b54', secondary: '#c0703c', bg: '#180800' },
+  doente:       { primary: '#6db33f', secondary: '#a8d8a8', bg: '#040f02' },
+  azarado:      { primary: '#b8860b', secondary: '#daa520', bg: '#100c00' },
+  sujo:         { primary: '#8b6914', secondary: '#a0855b', bg: '#0c0800' }
+};
 
-  <div>
-    <%= f.label :note, "Anotação (opcional)" %>
-    <%= f.text_area :note %>
-  </div>
+function selectEmotion(mood) {
+  document.querySelectorAll('.emotion-card').forEach(c => {
+    c.classList.remove('selected');
+    c.style.cssText = '';
+  });
+  const card = document.querySelector(`[data-mood="${mood}"]`);
+  const colors = moodColors[mood] || {};
+  if (card) {
+    card.classList.add('selected');
+    card.style.borderColor = colors.primary;
+    card.style.boxShadow = `0 8px 32px ${colors.primary}55`;
+    card.style.background = `${colors.bg}cc`;
+  }
+  document.getElementById('selectedMood').value = mood;
+  const page = document.getElementById('registerPage');
+  page.style.background = `radial-gradient(ellipse at 30% 40%, ${colors.primary}18 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, ${colors.secondary}12 0%, transparent 50%), ${colors.bg}`;
+  document.getElementById('intensityDisplay').style.color = colors.primary;
+}
 
-  <%= f.submit "Registrar" %>
-<% end %>
+function updateIntensity(val) {
+  document.getElementById('intensityDisplay').textContent = val;
+}
 
-<%= link_to "Voltar", emotions_path %>
+document.querySelectorAll('.emotion-card').forEach(card => {
+  card.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectEmotion(card.dataset.mood); }
+  });
+});
+</script>

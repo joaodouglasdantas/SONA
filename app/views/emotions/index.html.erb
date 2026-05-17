@@ -1,34 +1,74 @@
-<h1>Minhas Emoções</h1>
+<%# app/views/emotions/index.html.erb %>
+<% content_for :title, "Minhas Emoções — SONA" %>
 
-<%= link_to "Registrar nova emoção", new_emotion_path %>
+<%
+  mood_colors_idx = {
+    "feliz"        => "#FFE135", "euforico"     => "#7fe840",
+    "apaixonado"   => "#ff6ebf", "romantico"    => "#ff8fab",
+    "confiante"    => "#ff8c00", "sortudo"      => "#00e8a8",
+    "confortavel"  => "#a8edea", "triste"       => "#5b8db8",
+    "deprimido"    => "#6a6a9c", "entediado"    => "#888888",
+    "estressado"   => "#ff4444", "irritado"     => "#ff2d2d",
+    "bravo"        => "#ff0000", "assustado"    => "#9b59b6",
+    "cansado"      => "#6b8c42", "envergonhado" => "#e07b54",
+    "doente"       => "#6db33f", "azarado"      => "#b8860b",
+    "sujo"         => "#a0855b"
+  } unless defined?(mood_colors_idx)
 
-<% if @emotions.empty? %>
-  <p>Nenhuma emoção registrada ainda.</p>
-<% else %>
-  <table>
-    <thead>
-      <tr>
-        <th>Data e Hora</th>
-        <th>Emoção</th>
-        <th>Intensidade</th>
-        <th>Anotação</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
+  mood_labels_idx = {
+    "feliz"=>"Feliz","euforico"=>"Eufórico","apaixonado"=>"Apaixonado",
+    "romantico"=>"Romântico","confiante"=>"Confiante","sortudo"=>"Sortudo",
+    "confortavel"=>"Confortável","triste"=>"Triste","deprimido"=>"Deprimido",
+    "entediado"=>"Entediado","estressado"=>"Estressado","irritado"=>"Irritado",
+    "bravo"=>"Bravo","assustado"=>"Assustado","cansado"=>"Cansado",
+    "envergonhado"=>"Envergonhado","doente"=>"Doente","azarado"=>"Azarado","sujo"=>"Sujo"
+  } unless defined?(mood_labels_idx)
+%>
+
+<div class="emotion-index-page">
+  <div class="emotion-index-header">
+    <h1 class="emotion-index-title">Minhas Emoções</h1>
+    <%= link_to "+ Registrar", new_emotion_path, class: "sims-btn sims-btn-primary" %>
+  </div>
+
+  <% if @emotions.empty? %>
+    <div class="emotion-empty-state">
+      <p style="font-size:3rem;">🌱</p>
+      <p>Você ainda não registrou nenhuma emoção.</p>
+      <%= link_to "Registrar agora", new_emotion_path, class: "sims-btn sims-btn-primary" %>
+    </div>
+  <% else %>
+    <div class="emotion-timeline">
       <% @emotions.each do |emotion| %>
-        <tr>
-          <td><%= emotion.created_at.strftime("%d/%m/%Y às %H:%M") %></td>
-          <td><%= emotion.mood %></td>
-          <td><%= emotion.intensity %>/10</td>
-          <td><%= emotion.note %></td>
-          <td>
-            <%= link_to "Ver", emotion_path(emotion) %>
-            <%= link_to "Editar", edit_emotion_path(emotion) %>
-            <%= button_to "Deletar", emotion_path(emotion), method: :delete, data: { turbo_confirm: "Tem certeza?" } %>
-          </td>
-        </tr>
+        <% mood = emotion.mood.to_s.downcase.strip
+           color = mood_colors_idx[mood] || "#00c38c"
+           label = mood_labels_idx[mood] || mood.capitalize
+        %>
+        <%= link_to emotion_path(emotion), class: "emotion-timeline-item", data: { mood: mood } do %>
+          <img src="/assets/emocoes/<%= mood %>-Photoroom.png"
+               onerror="this.src='/assets/emocoes/<%= mood %>.png'"
+               class="emotion-timeline-sim"
+               alt="<%= label %>">
+
+          <div class="emotion-timeline-body">
+            <div class="emotion-timeline-mood" style="color: <%= color %>;">
+              <%= label %>
+            </div>
+            <div class="emotion-timeline-note">
+              <%= emotion.note.present? ? emotion.note : "Sem anotação" %>
+            </div>
+          </div>
+
+          <div class="emotion-timeline-meta">
+            <span class="emotion-timeline-date">
+              <%= (emotion.recorded_at || emotion.created_at).strftime("%d/%m · %H:%M") %>
+            </span>
+            <span class="emotion-intensity-pill" style="color:<%= color %>; background:<%= color %>18;">
+              <%= emotion.intensity %>/10
+            </span>
+          </div>
+        <% end %>
       <% end %>
-    </tbody>
-  </table>
-<% end %>
+    </div>
+  <% end %>
+</div>

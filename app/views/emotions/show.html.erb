@@ -1,7 +1,208 @@
-<h1>Emoção — <%= @emotion.created_at.strftime("%d/%m/%Y às %H:%M") %></h1>
+<%# app/views/emotions/show.html.erb %>
+<% content_for :title, "#{@emotion.mood&.capitalize} — SONA" %>
 
-<p><strong>Emoção:</strong> <%= @emotion.mood %></p>
-<p><strong>Intensidade:</strong> <%= @emotion.intensity %>/10</p>
-<p><strong>Anotação:</strong> <%= @emotion.note.presence || "Nenhuma anotação." %></p>
+<%
+  mood = @emotion.mood.to_s.downcase.strip
 
-<%= link_to "Voltar", emotions_path %>
+  EMOTION_DATA = {
+    "feliz"        => { label: "Feliz",        primary: "#FFE135", secondary: "#FFA500", bg: "#1a1600",
+                        effects: "Libera dopamina e serotonina, elevando seu humor e disposição.",
+                        causes: "Conquistas pessoais, conexões sociais, atividades prazerosas ou boas notícias.",
+                        particle: "circle" },
+    "euforico"     => { label: "Eufórico",     primary: "#7fe840", secondary: "#4dd9ff", bg: "#091a00",
+                        effects: "Energia muito elevada, pensamentos acelerados, sensação de invencibilidade.",
+                        causes: "Grandes vitórias, paixão intensa, cafeína/adrenalina ou momentos de pico.",
+                        particle: "circle" },
+    "apaixonado"   => { label: "Apaixonado",   primary: "#ff6ebf", secondary: "#ff2d78", bg: "#1a0010",
+                        effects: "Coração acelerado, pensamentos focados na pessoa amada, sensação de completude.",
+                        causes: "Encontros especiais, conexão profunda com alguém, lembranças carinhosas.",
+                        particle: "heart" },
+    "romantico"    => { label: "Romântico",    primary: "#ff8fab", secondary: "#ffb3c6", bg: "#1a0816",
+                        effects: "Leveza, carinho e desejo de compartilhar momentos bonitos.",
+                        causes: "Ambiente acolhedor, músicas especiais, gestos gentis ou presença de quem você ama.",
+                        particle: "heart" },
+    "confiante"    => { label: "Confiante",    primary: "#ff8c00", secondary: "#ffb347", bg: "#1a0900",
+                        effects: "Postura mais ereta, voz mais firme, disposição para assumir desafios.",
+                        causes: "Preparo, conquistas recentes, feedbacks positivos ou apoio de pessoas importantes.",
+                        particle: "circle" },
+    "sortudo"      => { label: "Sortudo",      primary: "#00e8a8", secondary: "#7fe840", bg: "#001a10",
+                        effects: "Gratidão amplificada, abertura para novas oportunidades e otimismo.",
+                        causes: "Coincidências felizes, coisas que deram certo sem esforço ou surpresas boas.",
+                        particle: "circle" },
+    "confortavel"  => { label: "Confortável",  primary: "#a8edea", secondary: "#74b9ff", bg: "#051518",
+                        effects: "Respiração tranquila, músculos relaxados, mente serena.",
+                        causes: "Ambiente seguro, rotinas acolhedoras, presença de pessoas queridas.",
+                        particle: "circle" },
+    "triste"       => { label: "Triste",       primary: "#5b8db8", secondary: "#3a5f80", bg: "#020810",
+                        effects: "Choro, isolamento, dificuldade de concentração e peso emocional.",
+                        causes: "Perdas, decepções, saudade, solidão ou situações frustrantes.",
+                        particle: "rain" },
+    "deprimido"    => { label: "Deprimido",    primary: "#6a6a9c", secondary: "#2a2a44", bg: "#05050f",
+                        effects: "Falta de energia, desmotivação, pensamentos negativos persistentes.",
+                        causes: "Período prolongado de estresse, perdas acumuladas ou desequilíbrio químico.",
+                        particle: "rain" },
+    "entediado"    => { label: "Entediado",    primary: "#888888", secondary: "#aaaaaa", bg: "#0a0a0a",
+                        effects: "Falta de engajamento, procrastinação e sensação de tempo arrastado.",
+                        causes: "Falta de estímulo, rotina excessivamente repetitiva ou ausência de propósito.",
+                        particle: "circle" },
+    "estressado"   => { label: "Estressado",   primary: "#ff4444", secondary: "#ff8800", bg: "#1a0200",
+                        effects: "Tensão muscular, irritabilidade, coração acelerado e mente agitada.",
+                        causes: "Sobrecarga de tarefas, prazos, conflitos ou pressão constante.",
+                        particle: "circle" },
+    "irritado"     => { label: "Irritado",     primary: "#ff2d2d", secondary: "#c0392b", bg: "#1a0000",
+                        effects: "Reações impulsivas, dificuldade de ouvir e tensão física.",
+                        causes: "Situações injustas, frustração acumulada ou invasão de limites.",
+                        particle: "circle" },
+    "bravo"        => { label: "Bravo",        primary: "#ff0000", secondary: "#8b0000", bg: "#0f0000",
+                        effects: "Raiva intensa, adrenalina elevada, dificuldade de pensar com clareza.",
+                        causes: "Traição, injustiça grave, situações que afetam seus valores centrais.",
+                        particle: "circle" },
+    "assustado"    => { label: "Assustado",    primary: "#9b59b6", secondary: "#6c3483", bg: "#0d0014",
+                        effects: "Coração disparado, pupilas dilatadas, corpo em estado de alerta máximo.",
+                        causes: "Situações inesperadas, ameaças reais ou imaginárias, ansiedade intensa.",
+                        particle: "circle" },
+    "cansado"      => { label: "Cansado",      primary: "#6b8c42", secondary: "#8bc34a", bg: "#070d02",
+                        effects: "Sonolência, lentidão cognitiva, dificuldade de foco e irritabilidade leve.",
+                        causes: "Sono insuficiente, esforço físico/mental intenso ou desgaste emocional.",
+                        particle: "circle" },
+    "envergonhado" => { label: "Envergonhado", primary: "#e07b54", secondary: "#c0703c", bg: "#180800",
+                        effects: "Rubor, vontade de se encolher, evitar olhares e situações sociais.",
+                        causes: "Situações constrangedoras, erros em público ou julgamento alheio.",
+                        particle: "circle" },
+    "doente"       => { label: "Doente",       primary: "#6db33f", secondary: "#a8d8a8", bg: "#040f02",
+                        effects: "Corpo pesado, falta de energia, dor física e desânimo geral.",
+                        causes: "Infecções, inflamações, falta de sono ou alimentação inadequada.",
+                        particle: "circle" },
+    "azarado"      => { label: "Azarado",      primary: "#b8860b", secondary: "#daa520", bg: "#100c00",
+                        effects: "Frustração, sensação de impotência e desmotivação.",
+                        causes: "Coincidências negativas, dias onde tudo sai errado, pequenos acidentes.",
+                        particle: "circle" },
+    "sujo"         => { label: "Sujo",         primary: "#a0855b", secondary: "#8b6914", bg: "#0c0800",
+                        effects: "Desconforto físico, irritação e desejo de higiene imediata.",
+                        causes: "Trabalho físico intenso, ambiente sujo ou sensação de negligência própria.",
+                        particle: "circle" }
+  } unless defined?(EMOTION_DATA)
+
+  data = EMOTION_DATA[mood] || { label: mood.capitalize, primary: "#00c38c", secondary: "#7fe840",
+                                  bg: "#0d1f25", effects: "—", causes: "—", particle: "circle" }
+  intensity = @emotion.intensity || 5
+%>
+
+<div class="emotion-show-page" data-mood="<%= mood %>"
+     style="background: radial-gradient(ellipse at 20% 30%, <%= data[:primary] %>15 0%, transparent 55%),
+                         radial-gradient(ellipse at 80% 70%, <%= data[:secondary] %>10 0%, transparent 50%),
+                         <%= data[:bg] %>;">
+
+  <%# Aura de fundo %>
+  <div class="emotion-bg-aura"
+       style="--aura-primary: <%= data[:primary] %>; --aura-secondary: <%= data[:secondary] %>;"></div>
+  <style>
+    .emotion-bg-aura::before { background: <%= data[:primary] %>; }
+    .emotion-bg-aura::after  { background: <%= data[:secondary] %>; }
+  </style>
+
+  <%# Partículas %>
+  <div class="emotion-particles" id="particles"></div>
+
+  <%# Card principal %>
+  <div class="emotion-show-card"
+       style="border-color: <%= data[:primary] %>22; box-shadow: 0 20px 60px rgba(0,0,0,0.7), 0 0 80px <%= data[:primary] %>18;">
+
+    <img src="/assets/emocoes/<%= mood %>-Photoroom.png"
+         onerror="this.src='/assets/emocoes/<%= mood %>.png'"
+         class="emotion-show-sim"
+         alt="<%= data[:label] %>">
+
+    <div class="emotion-show-badge"
+         style="background: <%= data[:primary] %>22; color: <%= data[:primary] %>; border: 1.5px solid <%= data[:primary] %>44;">
+      <%= data[:label] %>
+    </div>
+
+    <div class="emotion-show-name" style="color: <%= data[:primary] %>;">
+      <%= data[:label] %>
+    </div>
+
+    <div class="emotion-show-intensity-label">
+      Intensidade: <%= intensity %>/10
+    </div>
+
+    <div class="emotion-show-intensity-bar">
+      <div class="emotion-show-intensity-fill"
+           style="width: <%= intensity * 10 %>%; background: linear-gradient(90deg, <%= data[:primary] %>, <%= data[:secondary] %>);"></div>
+    </div>
+
+    <div class="emotion-info-grid">
+      <div class="emotion-info-box" style="border-color: <%= data[:primary] %>22;">
+        <div class="emotion-info-box-title" style="color: <%= data[:primary] %>;">Como isso te afeta</div>
+        <div class="emotion-info-box-text"><%= data[:effects] %></div>
+      </div>
+      <div class="emotion-info-box" style="border-color: <%= data[:secondary] %>22;">
+        <div class="emotion-info-box-title" style="color: <%= data[:secondary] %>;">O que pode ter causado</div>
+        <div class="emotion-info-box-text"><%= data[:causes] %></div>
+      </div>
+    </div>
+
+    <% if @emotion.note.present? %>
+      <div class="emotion-note-display"
+           style="border-left-color: <%= data[:primary] %>;">
+        " <%= @emotion.note %> "
+      </div>
+    <% end %>
+
+    <p style="font-size:0.75rem; color:var(--sims-text-muted); margin-bottom:1.5rem;">
+      Registrado em <%= (@emotion.recorded_at || @emotion.created_at).strftime("%d/%m/%Y às %H:%M") %>
+    </p>
+
+    <div style="display:flex; gap:0.75rem; justify-content:center; flex-wrap:wrap;">
+      <%= link_to "← Voltar", emotions_path, class: "sims-btn sims-btn-ghost" %>
+      <%= link_to "✏ Editar", edit_emotion_path(@emotion), class: "sims-btn sims-btn-primary" %>
+      <%= button_to "🗑 Deletar", emotion_path(@emotion), method: :delete,
+                    data: { turbo_confirm: "Tem certeza que quer excluir este registro?" },
+                    style: "background:rgba(255,45,45,0.15); border:1px solid rgba(255,45,45,0.4); color:#ff6060; border-radius:20px; padding:0.5rem 1.2rem; font-family:'Nunito',sans-serif; font-weight:700; cursor:pointer;" %>
+    </div>
+  </div>
+</div>
+
+<script>
+(function() {
+  const mood = "<%= mood %>";
+  const primary = "<%= data[:primary] %>";
+  const secondary = "<%= data[:secondary] %>";
+  const particleType = "<%= data[:particle] %>";
+  const container = document.getElementById('particles');
+
+  function createParticle() {
+    const el = document.createElement('div');
+    const x = Math.random() * window.innerWidth;
+    const delay = Math.random() * 3;
+    const size = Math.random() * 8 + 4;
+    const dur = Math.random() * 3 + 3;
+
+    if (particleType === 'heart') {
+      el.className = 'emotion-heart-particle';
+      el.textContent = Math.random() > 0.5 ? '❤️' : '💕';
+      el.style.cssText = `left:${x}px; bottom:${Math.random()*200}px; animation-delay:${delay}s; animation-duration:${dur}s; font-size:${size + 8}px;`;
+    } else if (particleType === 'rain') {
+      el.className = 'emotion-particle';
+      el.style.cssText = `left:${x}px; bottom:100%; width:2px; height:${size * 2}px; border-radius:1px; background:${primary}; animation-delay:${delay}s; animation-duration:${dur}s; animation-name: rain-fall; opacity:0;`;
+    } else {
+      el.className = 'emotion-particle';
+      el.style.cssText = `left:${x}px; bottom:${Math.random()*100}px; width:${size}px; height:${size}px; background:${Math.random() > 0.5 ? primary : secondary}; animation-delay:${delay}s; animation-duration:${dur}s;`;
+    }
+    container.appendChild(el);
+    setTimeout(() => el.remove(), (dur + delay) * 1000);
+  }
+
+  // Gera partículas periodicamente
+  setInterval(createParticle, 600);
+  for (let i = 0; i < 6; i++) createParticle();
+})();
+</script>
+
+<style>
+@keyframes rain-fall {
+  0%   { opacity: 0; transform: translateY(0); }
+  20%  { opacity: 0.5; }
+  100% { opacity: 0; transform: translateY(300px); }
+}
+</style>
