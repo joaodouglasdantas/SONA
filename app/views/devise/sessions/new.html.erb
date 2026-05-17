@@ -1,17 +1,10 @@
 <div class="auth-page">
   <div class="auth-card">
     <div class="auth-header">
-      <svg class="plumbob plumbob-lg" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
-        <polygon points="50,5 95,52 50,99 5,52"  fill="#7fe840"/>
-        <polygon points="50,5 95,52 50,52"        fill="#a8ff60" opacity="0.85"/>
-        <polygon points="50,5 5,52 50,52"          fill="#5bc830" opacity="0.85"/>
-        <polygon points="50,99 95,52 50,52"        fill="#3d9e1e" opacity="0.9"/>
-        <polygon points="50,99 5,52 50,52"         fill="#2e7a15" opacity="0.9"/>
-      </svg>
+      <%= render "shared/logo", size: "lg" %>
       <h1 class="auth-title">SONA</h1>
       <p class="auth-subtitle">Entre na sua conta</p>
     </div>
-
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
       <div class="sims-form-group">
         <%= f.label :email, "E-mail", class: "sims-label" %>
@@ -31,7 +24,6 @@
       <% end %>
       <%= f.submit "Entrar", class: "sims-btn sims-btn-primary sims-btn-full" %>
     <% end %>
-
     <div class="auth-links">
       <%= render "devise/shared/links" %>
     </div>
