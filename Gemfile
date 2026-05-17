@@ -15,6 +15,8 @@ gem "pg"
 gem "devise"
 # Configurar .env
 gem "dotenv-rails"
+# Hugging Face — geração de avatar Sims (InstructPix2Pix, gratuito)
+# Usa Net::HTTP nativo do Ruby, sem gem adicional
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

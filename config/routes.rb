@@ -4,9 +4,9 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index"
   resources :emotions
 
-  # devise_scope :user do
-  #  root to: "devise/sessions#new"
-  # end
+  # Avatar Sims
+  resource :avatar, only: [ :show, :edit, :update ]
+  post "avatar/generate", to: "avatars#generate", as: :generate_avatar
 
   authenticated :user do
     root to: "dashboard#index", as: :authenticated_root

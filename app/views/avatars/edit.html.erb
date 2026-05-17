@@ -1,0 +1,125 @@
+<% content_for :title, "Editar Sim" %>
+
+<div class="sims-container-sm">
+
+  <div class="sims-page-header">
+    <%= render "shared/plumbob", size: "lg" %>
+    <div>
+      <h1 class="sims-page-title">Editar Sim</h1>
+      <p class="sims-page-subtitle">Personalize seu personagem</p>
+    </div>
+  </div>
+
+  <%= form_with url: avatar_path, method: :patch, multipart: true do |f| %>
+    <div class="sims-panel" style="margin-bottom:1.25rem;">
+      <p class="sims-panel-title">🎭 Nome do Seu Sim</p>
+
+      <div class="sims-form-group">
+        <label class="sims-label" for="user_sim_name">Nome no jogo</label>
+        <input type="text"
+               id="user_sim_name"
+               name="user[sim_name]"
+               value="<%= current_user.sim_name %>"
+               placeholder="<%= current_user.first_name %> <%= current_user.last_name %>"
+               class="sims-input">
+        <p class="mt-1" style="font-size:0.78rem; color:var(--sims-text-muted);">
+          Deixe em branco para usar seu nome real
+        </p>
+      </div>
+    </div>
+
+    <div class="sims-panel" style="margin-bottom:1.25rem;">
+      <p class="sims-panel-title">📸 Foto para o Avatar</p>
+
+      <!-- Preview da foto atual -->
+      <% if current_user.original_photo.attached? %>
+        <div style="text-align:center; margin-bottom:1rem;">
+          <p style="font-size:0.78rem; color:var(--sims-text-muted); margin-bottom:8px;">Foto atual:</p>
+          <%= image_tag url_for(current_user.original_photo),
+                        style: "width:120px; height:120px; object-fit:cover; border-radius:50%; border:2px solid var(--sims-teal);",
+                        alt: "Foto atual" %>
+        </div>
+      <% end %>
+
+      <!-- Dropzone de upload -->
+      <div class="upload-dropzone" id="dropzone" onclick="document.getElementById('photoInput').click()">
+        <div class="upload-icon">📷</div>
+        <span class="upload-label">
+          <%= current_user.original_photo.attached? ? "Trocar foto" : "Enviar sua foto" %>
+        </span>
+        <span class="upload-hint">PNG, JPG ou WEBP • Máx. 10MB</span>
+      </div>
+
+      <input type="file"
+             id="photoInput"
+             name="user[original_photo]"
+             accept="image/png,image/jpeg,image/webp"
+             class="hidden-input">
+
+      <!-- Preview da nova foto selecionada -->
+      <div class="upload-preview" id="uploadPreview">
+        <p style="font-size:0.78rem; color:var(--plumbob); font-weight:700; margin-bottom:6px;">✅ Nova foto selecionada:</p>
+        <img id="previewImg" src="" alt="Preview">
+      </div>
+    </div>
+
+    <div class="action-row">
+      <%= f.submit "💾 Salvar", class: "sims-btn sims-btn-primary" %>
+      <%= link_to "Cancelar", avatar_path, class: "sims-btn sims-btn-ghost" %>
+    </div>
+  <% end %>
+
+  <!-- Remover sims_avatar gerado -->
+  <% if current_user.sims_avatar.attached? %>
+    <div class="sims-panel mt-3" style="border-color:rgba(255,45,45,0.2);">
+      <p class="sims-panel-title" style="color:#ff6060;">⚠️ Zona de perigo</p>
+      <p style="font-size:0.85rem; margin-bottom:1rem;">
+        Remover seu avatar Sims gerado. Você poderá gerar um novo depois.
+      </p>
+      <%= button_to "🗑️ Remover Avatar Sims",
+                    avatar_path,
+                    method: :patch,
+                    params: { remove_sims_avatar: true },
+                    data: { confirm: "Tem certeza? O avatar Sims será removido." },
+                    class: "sims-btn sims-btn-danger" %>
+    </div>
+  <% end %>
+
+</div>
+
+<script>
+  const input    = document.getElementById('photoInput');
+  const dropzone = document.getElementById('dropzone');
+  const preview  = document.getElementById('uploadPreview');
+  const previewImg = document.getElementById('previewImg');
+
+  input.addEventListener('change', (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      previewImg.src = ev.target.result;
+      preview.style.display = 'block';
+      dropzone.style.borderColor = 'var(--sims-teal)';
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // Drag & drop
+  dropzone.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    dropzone.classList.add('dragover');
+  });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('dragover'));
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('dragover');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) {
+      const dt = new DataTransfer();
+      dt.items.add(file);
+      input.files = dt.files;
+      input.dispatchEvent(new Event('change'));
+    }
+  });
+</script>
