@@ -10,60 +10,10 @@
 
   <div class="avatar-page">
 
-    <div class="sims-panel avatar-card">
-      <div class="avatar-header">
-        <%= render "shared/logo" %>
-        <h2 class="avatar-sim-name"><%= current_user.sim_display_name %></h2>
-        <span class="avatar-sim-subtitle">Sim de <%= current_user.first_name %></span>
-      </div>
-
-      <% if current_user.sims_avatar.attached? %>
-        <div class="avatar-image-wrapper">
-          <%= image_tag url_for(current_user.sims_avatar),
-                        class: "avatar-image avatar-image-sims",
-                        alt: current_user.sim_display_name %>
-          <span class="avatar-badge">Sim</span>
-        </div>
-      <% elsif current_user.original_photo.attached? %>
-        <div class="avatar-image-wrapper">
-          <%= image_tag url_for(current_user.original_photo),
-                        class: "avatar-image",
-                        alt: current_user.first_name %>
-        </div>
-      <% else %>
-        <div class="avatar-placeholder">
-          <span class="avatar-placeholder-icon">?</span>
-          <span>Sem avatar</span>
-          <span style="font-size:0.75rem; opacity:0.6">Envie sua foto</span>
-        </div>
-      <% end %>
-
-      <div class="mood-bar mt-3">
-        <span class="mood-chip mood-chip-feliz">Feliz</span>
-        <span class="mood-chip mood-chip-animado">Animado</span>
-        <span class="mood-chip mood-chip-inspirado">Inspirado</span>
-        <span class="mood-chip mood-chip-confiante">Confiante</span>
-        <span class="mood-chip mood-chip-concentrado">Concentrado</span>
-        <span class="mood-chip mood-chip-paqueador">Paqueador</span>
-        <span class="mood-chip mood-chip-furioso">Furioso</span>
-        <span class="mood-chip mood-chip-triste">Triste</span>
-        <span class="mood-chip mood-chip-entediado">Entediado</span>
-      </div>
-
-      <hr class="sims-divider">
-
-      <div class="action-row">
-        <%= link_to "Editar Sim", edit_avatar_path, class: "sims-btn sims-btn-ghost" %>
-
-        <% if current_user.original_photo.attached? && !current_user.sims_avatar.attached? %>
-          <%= button_to "Gerar Avatar", generate_avatar_path, method: :post, class: "sims-btn sims-btn-plumbob" %>
-        <% elsif current_user.sims_avatar.attached? %>
-          <%= button_to "Regerar Avatar", generate_avatar_path, method: :post,
-                        class: "sims-btn sims-btn-ghost",
-                        data: { confirm: "Gerar um novo avatar substituira o atual. Continuar?" } %>
-        <% end %>
-      </div>
-    </div>
+    <turbo-frame id="avatar-status-frame"
+                 <%= "src=\"#{avatar_status_path}\"".html_safe if current_user.avatar_generating? %>>
+      <%= render "avatar_status_frame" %>
+    </turbo-frame>
 
     <div style="display:flex; flex-direction:column; gap:1.25rem;">
 
@@ -98,9 +48,19 @@
           </div>
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <span style="font-size:0.85rem; color:var(--sims-text-muted);">Avatar gerado</span>
-            <span style="font-weight:800; color:<%= current_user.sims_avatar.attached? ? 'var(--plumbob)' : 'var(--sims-text-muted)' %>">
-              <%= current_user.sims_avatar.attached? ? "Pronto" : "Pendente" %>
-            </span>
+            <% status_color = case current_user.avatar_generation_status
+                              when "done"       then "var(--plumbob)"
+                              when "generating" then "var(--sims-teal-light)"
+                              when "failed"     then "#ff6060"
+                              else "var(--sims-text-muted)"
+                              end %>
+            <% status_label = case current_user.avatar_generation_status
+                              when "done"       then "Pronto"
+                              when "generating" then "Gerando..."
+                              when "failed"     then "Falhou"
+                              else "Pendente"
+                              end %>
+            <span style="font-weight:800; color:<%= status_color %>;"><%= status_label %></span>
           </div>
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <span style="font-size:0.85rem; color:var(--sims-text-muted);">Emocoes registradas</span>
@@ -109,7 +69,7 @@
         </div>
       </div>
 
-      <% unless current_user.original_photo.attached? && current_user.sims_avatar.attached? %>
+      <% unless current_user.sims_avatar.attached? || current_user.avatar_generating? %>
         <div class="sims-panel" style="border-color: rgba(127,232,64,0.3);">
           <p class="sims-panel-title" style="color:var(--plumbob);">Proximos passos</p>
           <div style="display:flex; flex-direction:column; gap:10px;">
@@ -132,27 +92,20 @@
         </div>
       <% end %>
 
+      <% if current_user.sims_avatar.attached? %>
+        <div class="sims-panel" style="border-color:rgba(255,45,45,0.2);">
+          <p class="sims-panel-title" style="color:#ff6060;">Zona de perigo</p>
+          <p style="font-size:0.85rem; margin-bottom:1rem;">Remover o avatar Sims gerado. Voce podera gerar um novo depois.</p>
+          <%= button_to "Remover Avatar",
+                        avatar_path,
+                        method: :patch,
+                        params: { remove_sims_avatar: true },
+                        data: { confirm: "Tem certeza? O avatar sera removido." },
+                        class: "sims-btn sims-btn-danger" %>
+        </div>
+      <% end %>
+
     </div>
   </div>
 
 </div>
-
-<div class="generating-overlay" id="generatingOverlay">
-  <svg class="plumbob plumbob-lg plumbob-spin" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
-    <polygon points="50,5 95,52 50,99 5,52" fill="#7fe840"/>
-    <polygon points="50,5 95,52 50,52"       fill="#a8ff60" opacity="0.85"/>
-    <polygon points="50,5 5,52 50,52"         fill="#5bc830" opacity="0.85"/>
-    <polygon points="50,99 95,52 50,52"       fill="#3d9e1e" opacity="0.9"/>
-    <polygon points="50,99 5,52 50,52"        fill="#2e7a15" opacity="0.9"/>
-  </svg>
-  <p class="generating-text">Criando seu Sim...</p>
-  <p style="font-size:0.8rem; color:var(--sims-text-muted);">Isso pode levar alguns segundos</p>
-</div>
-
-<script>
-  document.querySelectorAll('form[action*="generate"]').forEach(form => {
-    form.addEventListener('submit', () => {
-      document.getElementById('generatingOverlay').classList.add('active');
-    });
-  });
-</script>

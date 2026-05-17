@@ -17,4 +17,16 @@ class User < ApplicationRecord
   def sim_display_name
     sim_name.presence || "#{first_name} #{last_name}"
   end
+
+  def avatar_generating?
+    avatar_generation_status == "generating"
+  end
+
+  def avatar_done?
+    avatar_generation_status == "done"
+  end
+
+  def avatar_failed?
+    avatar_generation_status == "failed"
+  end
 end

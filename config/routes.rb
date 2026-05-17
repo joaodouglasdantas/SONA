@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resource :avatar, only: [ :show, :edit, :update ]
   post "avatar/generate", to: "avatars#generate", as: :generate_avatar
+  get  "avatar/status",   to: "avatars#status",   as: :avatar_status
 
   authenticated :user do
     root to: "dashboard#index", as: :authenticated_root

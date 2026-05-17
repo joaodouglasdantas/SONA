@@ -10,6 +10,7 @@ class AvatarsController < ApplicationController
   def update
     if params[:remove_sims_avatar].present?
       current_user.sims_avatar.purge if current_user.sims_avatar.attached?
+      current_user.update!(avatar_generation_status: "idle", avatar_generation_error: nil)
       redirect_to avatar_path, notice: "Avatar removido."
       return
     end
@@ -35,15 +36,17 @@ class AvatarsController < ApplicationController
       return
     end
 
-    service = SimsAvatarService.new(current_user)
-    result  = service.generate
+    current_user.update!(
+      avatar_generation_status: "generating",
+      avatar_generation_error: nil
+    )
 
-    if result[:success]
-      flash[:notice] = "Avatar gerado com sucesso."
-    else
-      flash[:alert] = "Erro ao gerar avatar: #{result[:error]}"
-    end
-
+    AvatarGenerationJob.perform_later(current_user.id)
     redirect_to avatar_path
+  end
+
+  def status
+    current_user.reload
+    render partial: "avatar_status_frame", layout: false
   end
 end

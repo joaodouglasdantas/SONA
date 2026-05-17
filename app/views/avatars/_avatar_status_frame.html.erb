@@ -1,0 +1,167 @@
+<turbo-frame id="avatar-status-frame">
+
+  <% if current_user.avatar_generating? %>
+    <div data-controller="avatar-poll">
+
+      <div class="sims-panel avatar-card">
+        <div class="avatar-header">
+          <%= render "shared/logo" %>
+          <h2 class="avatar-sim-name"><%= current_user.sim_display_name %></h2>
+          <span class="avatar-sim-subtitle">Gerando seu Sim...</span>
+        </div>
+
+        <div class="generation-status-box">
+          <svg class="plumbob plumbob-lg plumbob-spin" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="50,5 95,52 50,99 5,52" fill="#7fe840"/>
+            <polygon points="50,5 95,52 50,52"       fill="#a8ff60" opacity="0.85"/>
+            <polygon points="50,5 5,52 50,52"         fill="#5bc830" opacity="0.85"/>
+            <polygon points="50,99 95,52 50,52"       fill="#3d9e1e" opacity="0.9"/>
+            <polygon points="50,99 5,52 50,52"        fill="#2e7a15" opacity="0.9"/>
+          </svg>
+
+          <p class="generation-title">Criando seu Sim</p>
+          <p class="generation-subtitle">O modelo de IA esta processando sua foto</p>
+
+          <div class="generation-progress-bar">
+            <div class="generation-progress-fill"></div>
+          </div>
+
+          <p class="generation-elapsed">
+            Tempo decorrido: <span data-avatar-poll-target="elapsed">0s</span>
+          </p>
+
+          <div class="generation-steps">
+            <div class="generation-step generation-step-done">
+              <span class="generation-step-dot"></span>
+              <span>Foto recebida</span>
+            </div>
+            <div class="generation-step generation-step-active">
+              <span class="generation-step-dot"></span>
+              <span>Modelo de IA processando</span>
+            </div>
+            <div class="generation-step generation-step-pending">
+              <span class="generation-step-dot"></span>
+              <span>Salvando avatar</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sims-panel" style="margin-top:1.25rem;">
+        <p class="sims-panel-title">Dica</p>
+        <p style="font-size:0.85rem; color:var(--sims-text-muted); line-height:1.6;">
+          A primeira geracao pode levar entre 30 segundos e 2 minutos enquanto o modelo carrega.
+          As proximas serao mais rapidas.
+        </p>
+      </div>
+
+    </div>
+
+  <% elsif current_user.avatar_failed? %>
+    <div class="sims-panel avatar-card">
+      <div class="avatar-header">
+        <%= render "shared/logo" %>
+        <h2 class="avatar-sim-name"><%= current_user.sim_display_name %></h2>
+        <span class="avatar-sim-subtitle">Falha na geracao</span>
+      </div>
+
+      <div class="generation-status-box">
+        <div style="font-size:2rem; margin-bottom:0.75rem; color:#ff6060;">!</div>
+        <p class="generation-title" style="color:#ff6060;">Algo deu errado</p>
+        <p class="generation-subtitle"><%= current_user.avatar_generation_error %></p>
+      </div>
+
+      <hr class="sims-divider">
+
+      <div class="action-row">
+        <%= link_to "Editar Sim", edit_avatar_path, class: "sims-btn sims-btn-ghost" %>
+        <%= button_to "Tentar novamente", generate_avatar_path, method: :post, class: "sims-btn sims-btn-plumbob" %>
+      </div>
+    </div>
+
+  <% elsif current_user.sims_avatar.attached? %>
+    <div class="sims-panel avatar-card">
+      <div class="avatar-header">
+        <%= render "shared/logo" %>
+        <h2 class="avatar-sim-name"><%= current_user.sim_display_name %></h2>
+        <span class="avatar-sim-subtitle">Sim de <%= current_user.first_name %></span>
+      </div>
+
+      <div class="avatar-image-wrapper">
+        <%= image_tag url_for(current_user.sims_avatar),
+                      class: "avatar-image avatar-image-sims",
+                      alt: current_user.sim_display_name %>
+        <span class="avatar-badge">Sim</span>
+      </div>
+
+      <div class="mood-bar mt-3">
+        <span class="mood-chip mood-chip-feliz">Feliz</span>
+        <span class="mood-chip mood-chip-animado">Animado</span>
+        <span class="mood-chip mood-chip-inspirado">Inspirado</span>
+        <span class="mood-chip mood-chip-confiante">Confiante</span>
+        <span class="mood-chip mood-chip-concentrado">Concentrado</span>
+        <span class="mood-chip mood-chip-paqueador">Paqueador</span>
+        <span class="mood-chip mood-chip-furioso">Furioso</span>
+        <span class="mood-chip mood-chip-triste">Triste</span>
+        <span class="mood-chip mood-chip-entediado">Entediado</span>
+      </div>
+
+      <hr class="sims-divider">
+
+      <div class="action-row">
+        <%= link_to "Editar Sim", edit_avatar_path, class: "sims-btn sims-btn-ghost" %>
+        <%= button_to "Regerar Avatar", generate_avatar_path, method: :post,
+                      class: "sims-btn sims-btn-ghost",
+                      data: { confirm: "Gerar um novo avatar substituira o atual. Continuar?" } %>
+      </div>
+    </div>
+
+  <% elsif current_user.original_photo.attached? %>
+    <div class="sims-panel avatar-card">
+      <div class="avatar-header">
+        <%= render "shared/logo" %>
+        <h2 class="avatar-sim-name"><%= current_user.sim_display_name %></h2>
+        <span class="avatar-sim-subtitle">Sim de <%= current_user.first_name %></span>
+      </div>
+
+      <div class="avatar-image-wrapper">
+        <%= image_tag url_for(current_user.original_photo),
+                      class: "avatar-image",
+                      alt: current_user.first_name %>
+      </div>
+
+      <p style="font-size:0.82rem; color:var(--sims-text-muted); text-align:center; margin-top:0.75rem;">
+        Foto enviada. Pronto para virar um Sim!
+      </p>
+
+      <hr class="sims-divider">
+
+      <div class="action-row">
+        <%= link_to "Editar Sim", edit_avatar_path, class: "sims-btn sims-btn-ghost" %>
+        <%= button_to "Gerar Avatar", generate_avatar_path, method: :post, class: "sims-btn sims-btn-plumbob" %>
+      </div>
+    </div>
+
+  <% else %>
+    <div class="sims-panel avatar-card">
+      <div class="avatar-header">
+        <%= render "shared/logo" %>
+        <h2 class="avatar-sim-name"><%= current_user.sim_display_name %></h2>
+        <span class="avatar-sim-subtitle">Sim de <%= current_user.first_name %></span>
+      </div>
+
+      <div class="avatar-placeholder">
+        <span class="avatar-placeholder-icon">?</span>
+        <span>Sem avatar</span>
+        <span style="font-size:0.75rem; opacity:0.6">Envie sua foto para comecar</span>
+      </div>
+
+      <hr class="sims-divider">
+
+      <div class="action-row">
+        <%= link_to "Enviar foto", edit_avatar_path, class: "sims-btn sims-btn-primary" %>
+      </div>
+    </div>
+  <% end %>
+
+</turbo-frame>
