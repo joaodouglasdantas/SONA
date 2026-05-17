@@ -1,13 +1,8 @@
-<%# Plumbob SVG — símbolo do The Sims %>
-<%# Uso: render "shared/plumbob" ou render "shared/plumbob", size: "lg" %>
 <% css_class = local_assigns[:size] == "lg" ? "plumbob plumbob-lg" : "plumbob" %>
 <svg class="<%= css_class %>" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-  <!-- Corpo do plumbob (diamante) -->
   <polygon points="50,5 95,52 50,99 5,52"  fill="#7fe840"/>
-  <!-- Facetas de cima -->
   <polygon points="50,5 95,52 50,52"        fill="#a8ff60" opacity="0.85"/>
   <polygon points="50,5 5,52 50,52"          fill="#5bc830" opacity="0.85"/>
-  <!-- Facetas de baixo -->
   <polygon points="50,99 95,52 50,52"        fill="#3d9e1e" opacity="0.9"/>
   <polygon points="50,99 5,52 50,52"         fill="#2e7a15" opacity="0.9"/>
 </svg>

@@ -4,7 +4,6 @@ Rails.application.routes.draw do
   get "dashboard", to: "dashboard#index"
   resources :emotions
 
-  # Avatar Sims
   resource :avatar, only: [ :show, :edit, :update ]
   post "avatar/generate", to: "avatars#generate", as: :generate_avatar
 

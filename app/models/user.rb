@@ -4,7 +4,6 @@ class User < ApplicationRecord
 
   has_many :emotions, dependent: :destroy
 
-  # Fotos do avatar Sims
   has_one_attached :original_photo
   has_one_attached :sims_avatar
 

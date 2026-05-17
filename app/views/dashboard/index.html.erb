@@ -1,55 +1,37 @@
-<% content_for :title, "Dashboard — SONA" %>
-
 <div class="sims-container">
 
-  <!-- Boas-vindas -->
   <div class="dashboard-welcome">
     <%= render "shared/plumbob", size: "lg" %>
-    <h1 class="dashboard-welcome-name mt-2">
-      Olá, <%= current_user.display_name %>!
-    </h1>
-    <p class="dashboard-welcome-sub">Como você está se sentindo hoje?</p>
+    <h1 class="dashboard-welcome-name mt-2">Ola, <%= current_user.display_name %>!</h1>
+    <p class="dashboard-welcome-sub">Como voce esta se sentindo hoje?</p>
   </div>
 
-  <!-- Grid de cards -->
   <div class="dashboard-grid">
 
-    <!-- Card: Meu Sim -->
     <div class="sims-panel" style="text-align:center;">
-      <p class="sims-panel-title">🎭 Meu Sim</p>
+      <p class="sims-panel-title">Meu Sim</p>
 
       <% if current_user.sims_avatar.attached? %>
         <%= image_tag url_for(current_user.sims_avatar),
-                      style: "width:100px; height:100px; object-fit:cover; border-radius:50%; border:3px solid var(--plumbob); box-shadow: 0 0 20px rgba(127,232,64,0.3); margin:0 auto 1rem; display:block;",
-                      alt: "Avatar Sims" %>
-        <p style="font-weight:800; color:var(--sims-white); margin-bottom:0.5rem;">
-          <%= current_user.sim_display_name %>
-        </p>
-        <span class="mood-chip mood-chip-feliz" style="margin:0 auto 1rem; display:inline-flex;">😊 Feliz</span>
+                      style: "width:100px; height:100px; object-fit:cover; border-radius:50%; border:3px solid var(--plumbob); box-shadow:0 0 20px rgba(127,232,64,0.3); margin:0 auto 1rem; display:block;",
+                      alt: "Avatar" %>
+        <p style="font-weight:800; color:var(--sims-white); margin-bottom:0.5rem;"><%= current_user.sim_display_name %></p>
+        <span class="mood-chip mood-chip-feliz" style="margin:0 auto 1rem; display:inline-flex;">Feliz</span>
       <% elsif current_user.original_photo.attached? %>
         <%= image_tag url_for(current_user.original_photo),
                       style: "width:100px; height:100px; object-fit:cover; border-radius:50%; border:2px solid var(--sims-teal); margin:0 auto 1rem; display:block;",
                       alt: "Foto" %>
-        <p style="font-size:0.82rem; color:var(--sims-text-muted); margin-bottom:1rem;">
-          Pronto para virar um Sim!
-        </p>
+        <p style="font-size:0.82rem; color:var(--sims-text-muted); margin-bottom:1rem;">Pronto para virar um Sim</p>
       <% else %>
-        <div style="width:80px; height:80px; border-radius:50%; background:var(--sims-panel-light); border:2px dashed var(--sims-border); display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; font-size:2rem;">
-          🧍
-        </div>
-        <p style="font-size:0.82rem; color:var(--sims-text-muted); margin-bottom:1rem;">
-          Crie seu Sim!
-        </p>
+        <div style="width:80px; height:80px; border-radius:50%; background:var(--sims-panel-light); border:2px dashed var(--sims-border); display:flex; align-items:center; justify-content:center; margin:0 auto 1rem; font-size:1.5rem; color:var(--sims-text-muted);">?</div>
+        <p style="font-size:0.82rem; color:var(--sims-text-muted); margin-bottom:1rem;">Crie seu Sim</p>
       <% end %>
 
-      <%= link_to avatar_path, class: "sims-btn sims-btn-primary" do %>
-        <%= current_user.sims_avatar.attached? ? "Ver Sim" : "Criar Sim 💎" %>
-      <% end %>
+      <%= link_to current_user.sims_avatar.attached? ? "Ver Sim" : "Criar Sim", avatar_path, class: "sims-btn sims-btn-primary" %>
     </div>
 
-    <!-- Card: Emoções -->
     <div class="sims-panel">
-      <p class="sims-panel-title">❤️ Suas Emoções</p>
+      <p class="sims-panel-title">Suas Emocoes</p>
 
       <% recent_emotions = current_user.emotions.order(recorded_at: :desc).limit(3) %>
       <% if recent_emotions.any? %>
@@ -57,40 +39,31 @@
           <% recent_emotions.each do |emotion| %>
             <div style="display:flex; justify-content:space-between; align-items:center; padding:8px 12px; background:rgba(0,0,0,0.2); border-radius:10px;">
               <span style="font-weight:700; font-size:0.9rem;"><%= emotion.mood&.capitalize || "—" %></span>
-              <span style="font-size:0.75rem; color:var(--sims-text-muted);">
-                <%= emotion.recorded_at&.strftime("%d/%m") || emotion.created_at.strftime("%d/%m") %>
-              </span>
+              <span style="font-size:0.75rem; color:var(--sims-text-muted);"><%= emotion.recorded_at&.strftime("%d/%m") || emotion.created_at.strftime("%d/%m") %></span>
             </div>
           <% end %>
         </div>
       <% else %>
-        <p style="font-size:0.85rem; color:var(--sims-text-muted); margin-bottom:1.25rem;">
-          Nenhuma emoção registrada ainda.
-        </p>
+        <p style="font-size:0.85rem; color:var(--sims-text-muted); margin-bottom:1.25rem;">Nenhuma emocao registrada ainda.</p>
       <% end %>
 
       <div class="action-row">
-        <%= link_to new_emotion_path, class: "sims-btn sims-btn-primary" do %>
-          + Registrar Emoção
-        <% end %>
-        <%= link_to emotions_path, class: "sims-btn sims-btn-ghost" do %>
-          Ver Todas
-        <% end %>
+        <%= link_to "+ Registrar Emocao", new_emotion_path, class: "sims-btn sims-btn-primary" %>
+        <%= link_to "Ver Todas", emotions_path, class: "sims-btn sims-btn-ghost" %>
       </div>
     </div>
 
-    <!-- Card: Bem-estar -->
     <div class="sims-panel">
-      <p class="sims-panel-title">🌱 Bem-estar</p>
+      <p class="sims-panel-title">Bem-estar</p>
       <p style="font-size:0.9rem; color:var(--sims-text-muted); line-height:1.6; margin-bottom:1.25rem;">
-        O SONA está aqui pra te ajudar a entender seus sentimentos e te conectar com profissionais de saúde mental em Mossoró.
+        O SONA esta aqui para te ajudar a entender seus sentimentos e te conectar com profissionais de saude mental em Mossoro.
       </p>
       <div class="mood-bar">
-        <span class="mood-chip mood-chip-feliz">😊 Feliz</span>
-        <span class="mood-chip mood-chip-concentrado">🔮 Focado</span>
-        <span class="mood-chip mood-chip-inspirado">✨ Inspirado</span>
-        <span class="mood-chip mood-chip-triste">😢 Triste</span>
-        <span class="mood-chip mood-chip-furioso">😤 Estressado</span>
+        <span class="mood-chip mood-chip-feliz">Feliz</span>
+        <span class="mood-chip mood-chip-concentrado">Focado</span>
+        <span class="mood-chip mood-chip-inspirado">Inspirado</span>
+        <span class="mood-chip mood-chip-triste">Triste</span>
+        <span class="mood-chip mood-chip-furioso">Estressado</span>
       </div>
     </div>
 

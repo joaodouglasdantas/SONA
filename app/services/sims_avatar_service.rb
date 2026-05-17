@@ -20,7 +20,7 @@ class SimsAvatarService
 
   def generate
     return { success: false, error: "Nenhuma foto encontrada." } unless @user.original_photo.attached?
-    return { success: false, error: "Token do Hugging Face nao configurado. Adicione HUGGINGFACE_TOKEN no .env" } if @token.blank?
+    return { success: false, error: "Token do Hugging Face nao configurado." } if @token.blank?
 
     image_data = @user.original_photo.download
     response   = call_hf_api(image_data)
@@ -92,7 +92,7 @@ class SimsAvatarService
 
     { success: true }
   rescue StandardError => e
-    { success: false, error: "Erro ao salvar imagem gerada: #{e.message}" }
+    { success: false, error: "Erro ao salvar imagem: #{e.message}" }
   ensure
     tempfile&.close
     tempfile&.unlink

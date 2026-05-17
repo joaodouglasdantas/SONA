@@ -1,10 +1,5 @@
-/* ============================================================
-   SONA — Tema The Sims 4
-   ============================================================ */
-
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap');
 
-/* ---------- Variáveis de cor ---------- */
 :root {
   --sims-bg:          #0d1f25;
   --sims-bg2:         #112530;
@@ -19,8 +14,6 @@
   --sims-text:        #d8f0ea;
   --sims-text-muted:  #7aaa9a;
   --sims-white:       #ffffff;
-
-  /* Humores — cores do The Sims */
   --mood-feliz:         #ffe135;
   --mood-animado:       #7fe840;
   --mood-inspirado:     #4dd9ff;
@@ -35,7 +28,6 @@
   --mood-tenso:         #6b8c42;
 }
 
-/* ---------- Reset & Base ---------- */
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -52,7 +44,6 @@ body {
   min-height: 100vh;
 }
 
-/* ---------- Navbar ---------- */
 .sims-nav {
   background: rgba(5, 18, 22, 0.95);
   border-bottom: 1px solid var(--sims-border);
@@ -114,7 +105,6 @@ body {
   color: var(--sims-teal-light);
 }
 
-/* ---------- Flash Messages ---------- */
 .sims-flash {
   padding: 0.75rem 1.5rem;
   border-radius: 8px;
@@ -137,7 +127,6 @@ body {
   color: #ff6060;
 }
 
-/* ---------- Containers ---------- */
 .sims-container {
   max-width: 1100px;
   margin: 0 auto;
@@ -150,7 +139,6 @@ body {
   padding: 2rem 1.5rem;
 }
 
-/* ---------- Panels ---------- */
 .sims-panel {
   background: var(--sims-panel);
   border: 1px solid var(--sims-border);
@@ -168,7 +156,6 @@ body {
   margin-bottom: 1rem;
 }
 
-/* ---------- Plumbob SVG ---------- */
 .plumbob {
   width: 36px;
   height: 36px;
@@ -187,7 +174,6 @@ body {
   50%       { transform: translateY(-6px); }
 }
 
-/* ---------- Botões ---------- */
 .sims-btn {
   display: inline-flex;
   align-items: center;
@@ -254,7 +240,6 @@ body {
   color: #ff8080;
 }
 
-/* ---------- Avatar Page ---------- */
 .avatar-page {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -266,7 +251,6 @@ body {
   .avatar-page { grid-template-columns: 1fr; }
 }
 
-/* Avatar display card */
 .avatar-card {
   position: relative;
   text-align: center;
@@ -356,7 +340,6 @@ body {
   border-radius: 10px;
 }
 
-/* ---------- Mood Indicator ---------- */
 .mood-bar {
   display: flex;
   flex-wrap: wrap;
@@ -395,7 +378,6 @@ body {
 .mood-chip-brincalhao   { background: var(--mood-brincalhao); color: white; }
 .mood-chip-tenso        { background: var(--mood-tenso); color: white; }
 
-/* ---------- Upload Form ---------- */
 .upload-dropzone {
   border: 2px dashed var(--sims-border);
   border-radius: 12px;
@@ -413,19 +395,18 @@ body {
 }
 
 .upload-icon { font-size: 2.5rem; margin-bottom: 0.5rem; opacity: 0.7; }
+
 .upload-label {
   display: block;
   font-weight: 700;
   color: var(--sims-text);
   margin-bottom: 0.25rem;
 }
+
 .upload-hint { font-size: 0.8rem; color: var(--sims-text-muted); }
 
-input[type="file"].hidden-input {
-  display: none;
-}
+input[type="file"].hidden-input { display: none; }
 
-/* Preview da foto carregada */
 .upload-preview {
   margin-top: 1rem;
   display: none;
@@ -439,10 +420,7 @@ input[type="file"].hidden-input {
   border: 2px solid var(--sims-teal);
 }
 
-/* ---------- Form Fields ---------- */
-.sims-form-group {
-  margin-bottom: 1.25rem;
-}
+.sims-form-group { margin-bottom: 1.25rem; }
 
 .sims-label {
   display: block;
@@ -473,14 +451,12 @@ input[type="file"].hidden-input {
   box-shadow: 0 0 0 3px rgba(0, 195, 140, 0.15);
 }
 
-/* ---------- Divider ---------- */
 .sims-divider {
   border: none;
   border-top: 1px solid var(--sims-border);
   margin: 1.25rem 0;
 }
 
-/* ---------- Page Title ---------- */
 .sims-page-header {
   display: flex;
   align-items: center;
@@ -502,7 +478,6 @@ input[type="file"].hidden-input {
   margin-top: 2px;
 }
 
-/* ---------- Action Row ---------- */
 .action-row {
   display: flex;
   gap: 10px;
@@ -510,7 +485,6 @@ input[type="file"].hidden-input {
   margin-top: 1.25rem;
 }
 
-/* ---------- Comparison View ---------- */
 .avatar-compare {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -518,9 +492,7 @@ input[type="file"].hidden-input {
   margin-top: 1rem;
 }
 
-.avatar-compare-item {
-  text-align: center;
-}
+.avatar-compare-item { text-align: center; }
 
 .avatar-compare-label {
   font-size: 0.7rem;
@@ -544,7 +516,6 @@ input[type="file"].hidden-input {
   box-shadow: 0 0 20px rgba(127, 232, 64, 0.2);
 }
 
-/* ---------- Generating State ---------- */
 .generating-overlay {
   display: none;
   position: fixed;
@@ -558,9 +529,7 @@ input[type="file"].hidden-input {
   backdrop-filter: blur(4px);
 }
 
-.generating-overlay.active {
-  display: flex;
-}
+.generating-overlay.active { display: flex; }
 
 .generating-text {
   font-size: 1.1rem;
@@ -578,7 +547,6 @@ input[type="file"].hidden-input {
   animation: plumbob-float 2s ease-in-out infinite, spin-plumbob 4s linear infinite;
 }
 
-/* ---------- Dashboard ---------- */
 .dashboard-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -603,23 +571,6 @@ input[type="file"].hidden-input {
   margin-top: 0.5rem;
 }
 
-/* ---------- Misc ---------- */
-.text-teal    { color: var(--sims-teal-light); }
-.text-muted   { color: var(--sims-text-muted); }
-.text-plumbob { color: var(--plumbob); }
-.text-center  { text-align: center; }
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.mb-1 { margin-bottom: 0.5rem; }
-.mb-2 { margin-bottom: 1rem; }
-.gap-1 { gap: 0.5rem; }
-.flex { display: flex; }
-.flex-col { flex-direction: column; }
-.items-center { align-items: center; }
-.justify-center { justify-content: center; }
-
-/* ---------- Auth Pages (Login / Cadastro) ---------- */
 .auth-page {
   min-height: 100vh;
   display: flex;
@@ -677,9 +628,7 @@ input[type="file"].hidden-input {
   transition: color 0.15s;
 }
 
-.auth-links a:hover {
-  color: var(--sims-teal-light);
-}
+.auth-links a:hover { color: var(--sims-teal-light); }
 
 .auth-error {
   background: rgba(255, 45, 45, 0.12);
@@ -718,6 +667,14 @@ input[type="file"].hidden-input {
   font-weight: 600;
 }
 
-.sims-btn-full {
-  width: 100%;
-}
+.sims-btn-full { width: 100%; }
+
+.text-teal    { color: var(--sims-teal-light); }
+.text-muted   { color: var(--sims-text-muted); }
+.text-plumbob { color: var(--plumbob); }
+.text-center  { text-align: center; }
+.mt-1 { margin-top: 0.5rem; }
+.mt-2 { margin-top: 1rem; }
+.mt-3 { margin-top: 1.5rem; }
+.mb-1 { margin-bottom: 0.5rem; }
+.mb-2 { margin-bottom: 1rem; }

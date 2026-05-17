@@ -9,14 +9,9 @@ gem "turbo-rails"
 gem "stimulus-rails"
 gem "jbuilder"
 
-# PostgreSQL
 gem "pg"
-# Login
 gem "devise"
-# Configurar .env
 gem "dotenv-rails"
-# Hugging Face — geração de avatar Sims (InstructPix2Pix, gratuito)
-# Usa Net::HTTP nativo do Ruby, sem gem adicional
 
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
@@ -34,11 +29,8 @@ gem "image_processing", "~> 1.2"
 
 group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
-
   gem "bundler-audit", require: false
-
   gem "brakeman", require: false
-
   gem "rubocop-rails-omakase", require: false
 end
 

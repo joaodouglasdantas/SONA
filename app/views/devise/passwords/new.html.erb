@@ -1,8 +1,5 @@
-<% content_for :title, "Recuperar senha — SONA" %>
-
 <div class="auth-page">
   <div class="auth-card">
-
     <div class="auth-header">
       <svg class="plumbob plumbob-lg" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
         <polygon points="50,5 95,52 50,99 5,52"  fill="#7fe840"/>
@@ -11,25 +8,22 @@
         <polygon points="50,99 95,52 50,52"        fill="#3d9e1e" opacity="0.9"/>
         <polygon points="50,99 5,52 50,52"         fill="#2e7a15" opacity="0.9"/>
       </svg>
-      <h1 class="auth-title">Recuperar Senha</h1>
-      <p class="auth-subtitle">Te mandaremos um link por e-mail</p>
+      <h1 class="auth-title">Recuperar senha</h1>
+      <p class="auth-subtitle">Enviaremos um link por e-mail</p>
     </div>
 
     <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
       <%= render "devise/shared/error_messages", resource: resource %>
-
       <div class="sims-form-group">
         <%= f.label :email, "E-mail", class: "sims-label" %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email",
             class: "sims-input", placeholder: "seu@email.com" %>
       </div>
-
-      <%= f.submit "Enviar instruções", class: "sims-btn sims-btn-primary sims-btn-full" %>
+      <%= f.submit "Enviar instrucoes", class: "sims-btn sims-btn-primary sims-btn-full" %>
     <% end %>
 
     <div class="auth-links">
       <%= render "devise/shared/links" %>
     </div>
-
   </div>
 </div>

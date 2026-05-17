@@ -10,7 +10,7 @@ class AvatarsController < ApplicationController
   def update
     if params[:remove_sims_avatar].present?
       current_user.sims_avatar.purge if current_user.sims_avatar.attached?
-      redirect_to avatar_path, notice: "Avatar Sims removido."
+      redirect_to avatar_path, notice: "Avatar removido."
       return
     end
 
@@ -21,17 +21,17 @@ class AvatarsController < ApplicationController
     sim_name_value = params.dig(:user, :sim_name)
     current_user.update(sim_name: sim_name_value) if sim_name_value
 
-    redirect_to avatar_path, notice: "Informacoes salvas!"
+    redirect_to avatar_path, notice: "Informacoes salvas."
   end
 
   def generate
     unless current_user.original_photo.attached?
-      redirect_to edit_avatar_path, alert: "Envie uma foto primeiro para criar seu Sim!"
+      redirect_to edit_avatar_path, alert: "Envie uma foto primeiro."
       return
     end
 
     unless ENV["HUGGINGFACE_TOKEN"].present?
-      redirect_to avatar_path, alert: "Token do Hugging Face nao configurado. Adicione HUGGINGFACE_TOKEN no arquivo .env"
+      redirect_to avatar_path, alert: "Token do Hugging Face nao configurado. Adicione HUGGINGFACE_TOKEN no .env"
       return
     end
 
@@ -39,7 +39,7 @@ class AvatarsController < ApplicationController
     result  = service.generate
 
     if result[:success]
-      flash[:notice] = "Seu Sim foi criado com sucesso!"
+      flash[:notice] = "Avatar gerado com sucesso."
     else
       flash[:alert] = "Erro ao gerar avatar: #{result[:error]}"
     end

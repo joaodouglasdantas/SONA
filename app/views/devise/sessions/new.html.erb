@@ -1,8 +1,5 @@
-<% content_for :title, "Entrar — SONA" %>
-
 <div class="auth-page">
   <div class="auth-card">
-
     <div class="auth-header">
       <svg class="plumbob plumbob-lg" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
         <polygon points="50,5 95,52 50,99 5,52"  fill="#7fe840"/>
@@ -16,33 +13,27 @@
     </div>
 
     <%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
-
       <div class="sims-form-group">
         <%= f.label :email, "E-mail", class: "sims-label" %>
         <%= f.email_field :email, autofocus: true, autocomplete: "email",
             class: "sims-input", placeholder: "seu@email.com" %>
       </div>
-
       <div class="sims-form-group">
         <%= f.label :password, "Senha", class: "sims-label" %>
         <%= f.password_field :password, autocomplete: "current-password",
             class: "sims-input", placeholder: "••••••••" %>
       </div>
-
       <% if devise_mapping.rememberable? %>
         <div class="sims-checkbox-row">
           <%= f.check_box :remember_me %>
           <%= f.label :remember_me, "Lembrar de mim" %>
         </div>
       <% end %>
-
       <%= f.submit "Entrar", class: "sims-btn sims-btn-primary sims-btn-full" %>
-
     <% end %>
 
     <div class="auth-links">
       <%= render "devise/shared/links" %>
     </div>
-
   </div>
 </div>

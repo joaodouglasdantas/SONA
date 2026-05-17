@@ -1,8 +1,5 @@
-<% content_for :title, "Criar conta — SONA" %>
-
 <div class="auth-page">
   <div class="auth-card">
-
     <div class="auth-header">
       <svg class="plumbob plumbob-lg" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg">
         <polygon points="50,5 95,52 50,99 5,52"  fill="#7fe840"/>
@@ -11,57 +8,43 @@
         <polygon points="50,99 95,52 50,52"        fill="#3d9e1e" opacity="0.9"/>
         <polygon points="50,99 5,52 50,52"         fill="#2e7a15" opacity="0.9"/>
       </svg>
-      <h1 class="auth-title">Criar Seu Sim</h1>
+      <h1 class="auth-title">Criar conta</h1>
       <p class="auth-subtitle">Comece sua jornada no SONA</p>
     </div>
 
     <%= render "devise/shared/error_messages", resource: resource %>
 
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;">
         <div class="sims-form-group">
           <%= f.label :first_name, "Nome", class: "sims-label" %>
-          <%= f.text_field :first_name, autofocus: true,
-              class: "sims-input", placeholder: "Ana" %>
+          <%= f.text_field :first_name, autofocus: true, class: "sims-input", placeholder: "Ana" %>
         </div>
         <div class="sims-form-group">
           <%= f.label :last_name, "Sobrenome", class: "sims-label" %>
-          <%= f.text_field :last_name,
-              class: "sims-input", placeholder: "Silva" %>
+          <%= f.text_field :last_name, class: "sims-input", placeholder: "Silva" %>
         </div>
       </div>
-
       <div class="sims-form-group">
         <%= f.label :email, "E-mail", class: "sims-label" %>
-        <%= f.email_field :email, autocomplete: "email",
-            class: "sims-input", placeholder: "seu@email.com" %>
+        <%= f.email_field :email, autocomplete: "email", class: "sims-input", placeholder: "seu@email.com" %>
       </div>
-
       <div class="sims-form-group">
         <%= f.label :password, "Senha", class: "sims-label" %>
         <% if @minimum_password_length %>
-          <span style="font-size:0.72rem; color:var(--sims-text-muted); display:block; margin-bottom:4px;">
-            Mínimo <%= @minimum_password_length %> caracteres
-          </span>
+          <span style="font-size:0.72rem; color:var(--sims-text-muted); display:block; margin-bottom:4px;">Minimo <%= @minimum_password_length %> caracteres</span>
         <% end %>
-        <%= f.password_field :password, autocomplete: "new-password",
-            class: "sims-input", placeholder: "••••••••" %>
+        <%= f.password_field :password, autocomplete: "new-password", class: "sims-input", placeholder: "••••••••" %>
       </div>
-
       <div class="sims-form-group">
         <%= f.label :password_confirmation, "Confirmar senha", class: "sims-label" %>
-        <%= f.password_field :password_confirmation, autocomplete: "new-password",
-            class: "sims-input", placeholder: "••••••••" %>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "sims-input", placeholder: "••••••••" %>
       </div>
-
-      <%= f.submit "Criar conta 💎", class: "sims-btn sims-btn-plumbob sims-btn-full" %>
-
+      <%= f.submit "Criar conta", class: "sims-btn sims-btn-plumbob sims-btn-full" %>
     <% end %>
 
     <div class="auth-links">
       <%= render "devise/shared/links" %>
     </div>
-
   </div>
 </div>

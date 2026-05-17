@@ -8,17 +8,12 @@
     <meta name="mobile-web-app-capable" content="yes">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= yield :head %>
-
-    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
-
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="icon" href="/icon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/icon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "sims", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
@@ -31,19 +26,17 @@
           <svg width="20" height="24" viewBox="0 0 100 115" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 0 5px rgba(127,232,64,0.8))">
             <polygon points="50,5 95,52 50,99 5,52"  fill="#7fe840"/>
             <polygon points="50,5 95,52 50,52"        fill="#a8ff60" opacity="0.85"/>
-            <polygon points="50,5 5,52 50,52"          fill="#5bc830" opacity="0.85"/>
-            <polygon points="50,99 95,52 50,52"        fill="#3d9e1e" opacity="0.9"/>
-            <polygon points="50,99 5,52 50,52"         fill="#2e7a15" opacity="0.9"/>
+            <polygon points="50,5 5,52 50,52"         fill="#5bc830" opacity="0.85"/>
+            <polygon points="50,99 95,52 50,52"       fill="#3d9e1e" opacity="0.9"/>
+            <polygon points="50,99 5,52 50,52"        fill="#2e7a15" opacity="0.9"/>
           </svg>
           SONA
         </a>
-
         <div class="sims-nav-links">
           <%= link_to "Dashboard", dashboard_path, class: "sims-nav-link #{'active' if controller_name == 'dashboard'}" %>
           <%= link_to "Meu Sim", avatar_path, class: "sims-nav-link #{'active' if controller_name == 'avatars'}" %>
-          <%= link_to "Emoções", emotions_path, class: "sims-nav-link #{'active' if controller_name == 'emotions'}" %>
+          <%= link_to "Emocoes", emotions_path, class: "sims-nav-link #{'active' if controller_name == 'emotions'}" %>
         </div>
-
         <div class="sims-nav-user">
           <span class="sims-nav-user-name"><%= current_user.display_name %></span>
           <%= button_to "Sair", destroy_user_session_path, method: :delete,
