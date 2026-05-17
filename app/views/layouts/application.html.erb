@@ -41,11 +41,19 @@
     <% end %>
 
     <% if notice.present? %>
-      <div class="sims-flash sims-flash-notice"><%= notice %></div>
+      <div class="sims-flash sims-flash-notice" data-flash><%= notice %></div>
     <% end %>
     <% if alert.present? %>
-      <div class="sims-flash sims-flash-alert"><%= alert %></div>
+      <div class="sims-flash sims-flash-alert" data-flash><%= alert %></div>
     <% end %>
+    <script>
+      document.querySelectorAll('[data-flash]').forEach(function(el) {
+        setTimeout(function() {
+          el.classList.add('sims-flash-hidden');
+          setTimeout(function() { el.remove(); }, 400);
+        }, 3500);
+      });
+    </script>
 
     <%= yield %>
   </body>
