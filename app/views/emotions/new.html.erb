@@ -2,8 +2,24 @@
 <% content_for :title, "Registrar Emoção — SONA" %>
 
 <div class="emotion-register-page" id="registerPage">
-  <h1 class="emotion-register-title">Como você está?</h1>
-  <p class="emotion-register-sub">Escolha a emoção que mais representa seu momento</p>
+
+  <%# Indicador de etapas %>
+  <div class="step-indicator">
+    <div class="step-item active" id="stepDot1">
+      <div class="step-dot">1</div>
+      <span class="step-label">Emoção</span>
+    </div>
+    <div class="step-line" id="stepLine1"></div>
+    <div class="step-item" id="stepDot2">
+      <div class="step-dot">2</div>
+      <span class="step-label">Intensidade</span>
+    </div>
+    <div class="step-line" id="stepLine2"></div>
+    <div class="step-item" id="stepDot3">
+      <div class="step-dot">3</div>
+      <span class="step-label">Causa</span>
+    </div>
+  </div>
 
   <%= form_with model: @emotion, url: emotions_path, local: true, id: "emotionForm" do |f| %>
     <% if @emotion.errors.any? %>
@@ -16,51 +32,85 @@
 
     <%= f.hidden_field :mood, id: "selectedMood" %>
 
-    <% emotions_list = [
-         ["feliz","Feliz"],["euforico","Eufórico"],["apaixonado","Apaixonado"],
-         ["romantico","Romântico"],["confiante","Confiante"],["sortudo","Sortudo"],
-         ["confortavel","Confortável"],["entediado","Entediado"],["cansado","Cansado"],
-         ["envergonhado","Envergonhado"],["triste","Triste"],["deprimido","Deprimido"],
-         ["assustado","Assustado"],["azarado","Azarado"],["doente","Doente"],
-         ["sujo","Sujo"],["estressado","Estressado"],["irritado","Irritado"],["bravo","Bravo"]
-       ] %>
+    <%# ── ETAPA 1: Escolher emoção ── %>
+    <div class="form-step" id="step1">
+      <h1 class="emotion-register-title">Como você está?</h1>
+      <p class="emotion-register-sub">Escolha a emoção que mais representa seu momento</p>
 
-    <div class="emotion-grid">
-      <% emotions_list.each do |key, label| %>
-        <div class="emotion-card" data-mood="<%= key %>" onclick="selectEmotion('<%= key %>')" role="button" tabindex="0">
-          <div class="emotion-card-check">✓</div>
-          <img src="/emocoes/<%= key %>-Photoroom.png"
-               onerror="this.src='/emocoes/<%= key %>.png'"
-               class="emotion-card-img"
-               alt="<%= label %>">
-          <span class="emotion-card-label"><%= label %></span>
-        </div>
-      <% end %>
+      <% emotions_list = [
+           ["feliz","Feliz"],["euforico","Eufórico"],["apaixonado","Apaixonado"],
+           ["romantico","Romântico"],["confiante","Confiante"],["sortudo","Sortudo"],
+           ["confortavel","Confortável"],["entediado","Entediado"],["cansado","Cansado"],
+           ["envergonhado","Envergonhado"],["triste","Triste"],["deprimido","Deprimido"],
+           ["assustado","Assustado"],["azarado","Azarado"],["doente","Doente"],
+           ["sujo","Sujo"],["estressado","Estressado"],["irritado","Irritado"],["bravo","Bravo"]
+         ] %>
+
+      <div class="emotion-grid">
+        <% emotions_list.each do |key, label| %>
+          <div class="emotion-card" data-mood="<%= key %>" onclick="selectEmotion('<%= key %>')" role="button" tabindex="0">
+            <div class="emotion-card-check">✓</div>
+            <img src="/emocoes/<%= key %>-Photoroom.png"
+                 onerror="this.src='/emocoes/<%= key %>.png'"
+                 class="emotion-card-img"
+                 alt="<%= label %>">
+            <span class="emotion-card-label"><%= label %></span>
+          </div>
+        <% end %>
+      </div>
+
+      <div class="step-nav">
+        <%= link_to "← Minhas emoções", emotions_path, class: "step-btn step-btn-ghost" %>
+        <button type="button" class="step-btn step-btn-primary" onclick="goToStep(2)" id="btnStep1Next" disabled>
+          Próximo →
+        </button>
+      </div>
     </div>
 
-    <div class="emotion-intensity-section">
-      <span class="emotion-intensity-label">Intensidade do sentimento</span>
-      <span class="emotion-intensity-value" id="intensityDisplay">5</span>
-      <%= f.range_field :intensity, min: 1, max: 10, value: 5,
-                        class: "emotion-slider", id: "intensitySlider",
-                        oninput: "updateIntensity(this.value)" %>
-      <p style="font-size:0.75rem; color:var(--sims-text-muted); margin-top:0.5rem;">
-        1 = quase imperceptível &nbsp;·&nbsp; 10 = avassalador
-      </p>
+    <%# ── ETAPA 2: Intensidade ── %>
+    <div class="form-step hidden" id="step2">
+      <h1 class="emotion-register-title" id="step2Title">Quão intenso está?</h1>
+      <p class="emotion-register-sub">Arraste o controle para indicar a força do sentimento</p>
+
+      <div class="step2-preview" id="step2Preview">
+        <img src="" id="step2Img" class="step2-img" alt="">
+        <span id="step2MoodLabel" class="step2-mood-label"></span>
+      </div>
+
+      <div class="emotion-intensity-section">
+        <span class="emotion-intensity-value" id="intensityDisplay">5</span>
+        <p class="intensity-hint" id="intensityHint">moderado</p>
+        <%= f.range_field :intensity, min: 1, max: 10, value: 5,
+                          class: "emotion-slider", id: "intensitySlider",
+                          oninput: "updateIntensity(this.value)" %>
+        <p style="font-size:0.75rem; color:var(--sims-text-muted); margin-top:0.75rem;">
+          1 = quase imperceptível &nbsp;·&nbsp; 10 = avassalador
+        </p>
+      </div>
+
+      <div class="step-nav">
+        <button type="button" class="step-btn step-btn-ghost" onclick="goToStep(1)">← Voltar</button>
+        <button type="button" class="step-btn step-btn-primary" onclick="goToStep(3)">Próximo →</button>
+      </div>
     </div>
 
-    <div class="emotion-note-section">
-      <label for="emotion_note">O que pode ter causado isso? (opcional)</label>
-      <%= f.text_area :note, class: "emotion-textarea",
-                      placeholder: "Descreva o que aconteceu, o que você estava pensando...", rows: 4 %>
+    <%# ── ETAPA 3: Causa ── %>
+    <div class="form-step hidden" id="step3">
+      <h1 class="emotion-register-title">O que causou isso?</h1>
+      <p class="emotion-register-sub">Escreva sobre o que pode ter gerado esse sentimento (opcional)</p>
+
+      <div class="emotion-note-section">
+        <%= f.text_area :note, class: "emotion-textarea",
+                        placeholder: "Descreva o que aconteceu, o que você estava pensando...", rows: 5 %>
+      </div>
+
+      <div class="step-nav">
+        <button type="button" class="step-btn step-btn-ghost" onclick="goToStep(2)">← Voltar</button>
+        <button type="submit" class="step-btn step-btn-primary">💾 Registrar emoção</button>
+      </div>
     </div>
 
-    <button type="submit" class="emotion-submit-btn">💾 Registrar emoção</button>
   <% end %>
-
-  <br>
-  <%= link_to "← Minhas emoções", emotions_path,
-              style: "font-size:0.85rem; color:var(--sims-text-muted); margin-top:1.5rem;" %>
 </div>
 
 <script>
@@ -86,6 +136,15 @@ const moodColors = {
   sujo:         { primary: '#7c6323', secondary: '#a0855b', bg: '#0c0800' }
 };
 
+const intensityLabels = {
+  1: 'quase imperceptível', 2: 'muito leve', 3: 'leve',
+  4: 'moderado leve',       5: 'moderado',   6: 'moderado forte',
+  7: 'forte',               8: 'muito forte', 9: 'intenso',
+  10: 'avassalador'
+};
+
+let currentMood = null;
+
 function selectEmotion(mood) {
   document.querySelectorAll('.emotion-card').forEach(c => {
     c.classList.remove('selected');
@@ -100,13 +159,51 @@ function selectEmotion(mood) {
     card.style.background = `${colors.bg}cc`;
   }
   document.getElementById('selectedMood').value = mood;
-  const page = document.getElementById('registerPage');
-  page.style.background = `radial-gradient(ellipse at 30% 40%, ${colors.primary}18 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, ${colors.secondary}12 0%, transparent 50%), ${colors.bg}`;
+  document.getElementById('registerPage').style.background =
+    `radial-gradient(ellipse at 30% 40%, ${colors.primary}18 0%, transparent 60%),
+     radial-gradient(ellipse at 70% 60%, ${colors.secondary}12 0%, transparent 50%), ${colors.bg}`;
   document.getElementById('intensityDisplay').style.color = colors.primary;
+  document.getElementById('btnStep1Next').disabled = false;
+  currentMood = mood;
+}
+
+function goToStep(n) {
+  if (n === 2 && !currentMood) return;
+
+  // Atualiza preview da etapa 2
+  if (n === 2 && currentMood) {
+    const colors = moodColors[currentMood] || {};
+    const label = document.querySelector(`[data-mood="${currentMood}"] .emotion-card-label`)?.textContent || currentMood;
+    const img = document.getElementById('step2Img');
+    img.src = `/emocoes/${currentMood}-Photoroom.png`;
+    img.onerror = () => { img.src = `/emocoes/${currentMood}.png`; };
+    img.style.filter = `drop-shadow(0 0 20px ${colors.primary}88)`;
+    document.getElementById('step2MoodLabel').textContent = label;
+    document.getElementById('step2MoodLabel').style.color = colors.primary;
+    document.getElementById('intensityDisplay').style.color = colors.primary;
+    updateIntensity(document.getElementById('intensitySlider').value);
+  }
+
+  // Esconde todas as etapas
+  document.querySelectorAll('.form-step').forEach(s => s.classList.add('hidden'));
+  document.getElementById(`step${n}`).classList.remove('hidden');
+
+  // Atualiza indicador
+  for (let i = 1; i <= 3; i++) {
+    const dot = document.getElementById(`stepDot${i}`);
+    dot.classList.toggle('active', i <= n);
+    dot.classList.toggle('done', i < n);
+    if (i < 3) document.getElementById(`stepLine${i}`).classList.toggle('active', i < n);
+  }
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
 function updateIntensity(val) {
+  val = parseInt(val);
   document.getElementById('intensityDisplay').textContent = val;
+  const hint = document.getElementById('intensityHint');
+  if (hint) hint.textContent = intensityLabels[val] || '';
 }
 
 document.querySelectorAll('.emotion-card').forEach(card => {

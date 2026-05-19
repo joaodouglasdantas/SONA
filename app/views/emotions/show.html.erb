@@ -4,7 +4,7 @@
 <%
   mood = @emotion.mood.to_s.downcase.strip
 
-  EMOTION_DATA = {
+  emotion_data = {
     "feliz"        => { label: "Feliz",        primary: "#FFE135", secondary: "#FFA500", bg: "#1a1600",
                         effects: "Libera dopamina e serotonina, elevando seu humor e disposição.",
                         causes: "Conquistas pessoais, conexões sociais, atividades prazerosas ou boas notícias.",
@@ -81,9 +81,9 @@
                         effects: "Desconforto físico, irritação e desejo de higiene imediata.",
                         causes: "Trabalho físico intenso, ambiente sujo ou sensação de negligência própria.",
                         particle: "circle" }
-  } unless defined?(EMOTION_DATA)
+  }
 
-  data = EMOTION_DATA[mood] || { label: mood.capitalize, primary: "#00c38c", secondary: "#7fe840",
+  data = emotion_data[mood] || { label: mood.capitalize, primary: "#00c38c", secondary: "#7fe840",
                                   bg: "#0d1f25", effects: "—", causes: "—", particle: "circle" }
   intensity = @emotion.intensity || 5
 %>
