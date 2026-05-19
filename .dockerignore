@@ -35,6 +35,8 @@
 /app/assets/builds/*
 !/app/assets/builds/.keep
 /public/assets
+# Emocoes images are served from public/emocoes/ (static files, no asset pipeline)
+/app/assets/emocoes/
 
 # Ignore CI service files.
 /.github

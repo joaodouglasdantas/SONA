@@ -29,8 +29,8 @@
       <% emotions_list.each do |key, label| %>
         <div class="emotion-card" data-mood="<%= key %>" onclick="selectEmotion('<%= key %>')" role="button" tabindex="0">
           <div class="emotion-card-check">✓</div>
-          <img src="/assets/emocoes/<%= key %>-Photoroom.png"
-               onerror="this.src='/assets/emocoes/<%= key %>.png'"
+          <img src="/emocoes/<%= key %>-Photoroom.png"
+               onerror="this.src='/emocoes/<%= key %>.png'"
                class="emotion-card-img"
                alt="<%= label %>">
           <span class="emotion-card-label"><%= label %></span>
@@ -65,25 +65,25 @@
 
 <script>
 const moodColors = {
-  feliz:        { primary: '#FFE135', secondary: '#FFA500', bg: '#1a1600' },
-  euforico:     { primary: '#7fe840', secondary: '#4dd9ff', bg: '#091a00' },
-  apaixonado:   { primary: '#ff6ebf', secondary: '#ff2d78', bg: '#1a0010' },
+  feliz:        { primary: '#97ff77', secondary: '#97ff77', bg: '#1a1600' },
+  euforico:     { primary: '#6bff15', secondary: '#6bff15', bg: '#091a00' },
+  apaixonado:   { primary: '#e00070', secondary: '#e00070', bg: '#1a0010' },
   romantico:    { primary: '#ff8fab', secondary: '#ffb3c6', bg: '#1a0816' },
-  confiante:    { primary: '#ff8c00', secondary: '#ffb347', bg: '#1a0900' },
-  sortudo:      { primary: '#00e8a8', secondary: '#7fe840', bg: '#001a10' },
-  confortavel:  { primary: '#a8edea', secondary: '#74b9ff', bg: '#051518' },
+  confiante:    { primary: '#ffbb00', secondary: '#ffbb00', bg: '#1a0900' },
+  sortudo:      { primary: '#00e8a8', secondary: '#00e8a8', bg: '#001a10' },
+  confortavel:  { primary: '#9fe9b5', secondary: '#9fe9b5', bg: '#051518' },
   triste:       { primary: '#5b8db8', secondary: '#3a5f80', bg: '#020810' },
-  deprimido:    { primary: '#3a3a5c', secondary: '#2a2a44', bg: '#05050f' },
+  deprimido:    { primary: '#2c2c68', secondary: '#2c2c68', bg: '#05050f' },
   entediado:    { primary: '#888888', secondary: '#aaaaaa', bg: '#0a0a0a' },
-  estressado:   { primary: '#ff4444', secondary: '#ff8800', bg: '#1a0200' },
-  irritado:     { primary: '#ff2d2d', secondary: '#c0392b', bg: '#1a0000' },
-  bravo:        { primary: '#8b0000', secondary: '#ff2d2d', bg: '#0f0000' },
-  assustado:    { primary: '#9b59b6', secondary: '#6c3483', bg: '#0d0014' },
-  cansado:      { primary: '#6b8c42', secondary: '#8bc34a', bg: '#070d02' },
-  envergonhado: { primary: '#e07b54', secondary: '#c0703c', bg: '#180800' },
-  doente:       { primary: '#6db33f', secondary: '#a8d8a8', bg: '#040f02' },
-  azarado:      { primary: '#b8860b', secondary: '#daa520', bg: '#100c00' },
-  sujo:         { primary: '#8b6914', secondary: '#a0855b', bg: '#0c0800' }
+  estressado:   { primary: '#ff9900', secondary: '#ff9900', bg: '#1a0200' },
+  irritado:     { primary: '#ff2d2d', secondary: '#ff321b', bg: '#1a0000' },
+  bravo:        { primary: '#8b0000', secondary: '#b91313', bg: '#0f0000' },
+  assustado:    { primary: '#ffee00', secondary: '#ffee00', bg: '#0d0014' },
+  cansado:      { primary: '#647991', secondary: '#647991', bg: '#070d02' },
+  envergonhado: { primary: '#8234af', secondary: '#901ed1', bg: '#180800' },
+  doente:       { primary: '#5f8148', secondary: '#5f8148', bg: '#040f02' },
+  azarado:      { primary: '#525252', secondary: '#525252', bg: '#100c00' },
+  sujo:         { primary: '#7c6323', secondary: '#a0855b', bg: '#0c0800' }
 };
 
 function selectEmotion(mood) {

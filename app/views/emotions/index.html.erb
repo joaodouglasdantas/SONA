@@ -13,7 +13,7 @@
     "cansado"      => "#6b8c42", "envergonhado" => "#e07b54",
     "doente"       => "#6db33f", "azarado"      => "#b8860b",
     "sujo"         => "#a0855b"
-  } unless defined?(mood_colors_idx)
+  }
 
   mood_labels_idx = {
     "feliz"=>"Feliz","euforico"=>"Eufórico","apaixonado"=>"Apaixonado",
@@ -22,7 +22,7 @@
     "entediado"=>"Entediado","estressado"=>"Estressado","irritado"=>"Irritado",
     "bravo"=>"Bravo","assustado"=>"Assustado","cansado"=>"Cansado",
     "envergonhado"=>"Envergonhado","doente"=>"Doente","azarado"=>"Azarado","sujo"=>"Sujo"
-  } unless defined?(mood_labels_idx)
+  }
 %>
 
 <div class="emotion-index-page">
@@ -45,8 +45,8 @@
            label = mood_labels_idx[mood] || mood.capitalize
         %>
         <%= link_to emotion_path(emotion), class: "emotion-timeline-item", data: { mood: mood } do %>
-          <img src="/assets/emocoes/<%= mood %>-Photoroom.png"
-               onerror="this.src='/assets/emocoes/<%= mood %>.png'"
+          <img src="/emocoes/<%= mood %>-Photoroom.png"
+               onerror="this.src='/emocoes/<%= mood %>.png'"
                class="emotion-timeline-sim"
                alt="<%= label %>">
 
