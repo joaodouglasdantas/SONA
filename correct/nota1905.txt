@@ -1,0 +1,2 @@
+- refazer tela home
+- fazer logica grafal das relacoes emocoes
